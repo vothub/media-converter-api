@@ -42,9 +42,10 @@ function handlerMultipart(req, res) {
     const jobId = jobLib.create(jobData);
     jobLib.start(jobId);
 
-    let rtn = 'Upload complete.';
-    rtn += '<br /><a href="/api/v1/status/' + jobId + ' ">Job #' + jobId + '</a>';
-    res.send(rtn);
+    // let rtn = 'Upload complete.';
+    // rtn += '<br /><a href="/api/v1/status/' + jobId + ' ">Job #' + jobId + '</a>';
+    // res.send(rtn);
+    res.redirect('/api/v1/status/' + jobId);
   });
 
   // Pass the stream
