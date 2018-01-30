@@ -23,7 +23,7 @@ function _getClient(callback) {
     }
 
     // console.log('Connected correctly to server');
-    return callback(null, db)
+    return callback(null, db);
   });
 }
 
@@ -74,7 +74,7 @@ const transcodeJobsCollection = {
       });
     });
   }
-}
+};
 
 
 

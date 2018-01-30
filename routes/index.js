@@ -10,7 +10,9 @@ function registerRoutes(app) {
   app.get('/', require('./home'));
 
   // API Routes
-  app.get('/api', function (req, res) {return res.redirect('/api/v1')});
+  app.get('/api', function (req, res) {
+    return res.redirect('/api/v1');
+  });
   app.get('/api/v1', require('./api'));
 
   app.use('/api/v1/convert', require('./api/convert'));
