@@ -5,22 +5,9 @@ const express = require('express');
 const clarg = require('clarg');
 const ffbinLib = require('./lib/ffbinLib');
 const fmt = require('./lib/fmt');
-const config = require('./config');
+const routes = require('./routes');
 
 const clOpts = clarg().opts;
-
-function registerRoutes(app) {
-  app.use('/', function (req, res, next) {
-    res.locals.baseUrl = config.get('baseUrl') || '';
-    next();
-  });
-
-  // test route
-  app.get('/convert', require('./routes/convert'));
-
-  // App status
-  app.get('/', require('./routes/home'));
-}
 
 function startApp (port) {
   const portParsed = parseInt(port, 10);
@@ -32,7 +19,7 @@ function startApp (port) {
     const app = express();
     app.disable('x-powered-by');
 
-    registerRoutes(app);
+    routes(app);
 
     app.listen(portFinal, function () {
       console.log(`[${fmt.date()} ${fmt.time()}] Great Converto listening on port ${portFinal}`);
