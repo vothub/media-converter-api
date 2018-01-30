@@ -1,3 +1,5 @@
 module.exports = function (req, res) {
-  res.send('Great Converto is alive!');
+  let rtn = 'Great Converto is alive!';
+  rtn += '<br /><a href="/api/v1/convert">Start converting</a>'
+  res.send(rtn);
 };

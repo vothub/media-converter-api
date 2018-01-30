@@ -1,5 +1,5 @@
 function apiInfoPage (req, res) {
-  return res.json({todo: 'Some info about API', routeYoureLookingFor: '/api/convert'});
+  return res.send('API lives here - you\'re probably looking for: /api/v1/convert');
 }
 
 module.exports = apiInfoPage;

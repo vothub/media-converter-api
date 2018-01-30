@@ -10,9 +10,17 @@ function registerRoutes(app) {
   app.get('/', require('./home'));
 
   // API Routes
-  app.get('/api', require('./api'));
-  app.use('/api/convert', require('./api/convert'));
-  app.get('/api/retrieve/:jobId', require('./api/retrieve'));
+  app.get('/api', function (req, res) {return res.redirect('/api/v1')});
+  app.get('/api/v1', require('./api'));
+
+  app.use('/api/v1/convert', require('./api/convert'));
+
+  app.get('/api/v1/status', require('./api/status'));
+  app.get('/api/v1/status/:jobId', require('./api/status'));
+
+  app.get('/api/v1/retrieve', require('./api/retrieve'));
+  app.get('/api/v1/retrieve/:jobId', require('./api/retrieve'));
+  app.get('/api/v1/retrieve/:jobId/:nicename', require('./api/retrieve'));
 }
 
 module.exports = registerRoutes;
