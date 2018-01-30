@@ -1,8 +1,11 @@
+const express = require('express');
 const config = require('../config');
 
 function registerRoutes(app) {
+  app.use('/public', express.static('public'));
+
   app.use('/', function (req, res, next) {
-    res.locals.baseUrl = config.get('baseUrl') || '';
+    res.locals.baseUrl = config.baseUrl;
     next();
   });
 

@@ -1,0 +1,64 @@
+<h2>API</h2>
+
+<p>This API provides three endpoints.</p>
+<p>You can POST multipart forms or JSON data to create a job.</p>
+<p>Throttling may apply.</p>
+
+<table class="table" width="100%">
+  <tr>
+    <td>
+      <span class="label label-primary">POST</span>
+      <code>/api/v1/convert</code>
+      <br /><br />
+
+      <strong>Params:</strong>
+      <br />
+
+      <ul>
+        <li>input[name=converto-basename]</li>
+        <li>input[name=converto-file][type=file]</li>
+        <li>input[name=greatconverto-format]</li>
+      </ul>
+    </td>
+    <td>
+      Creates a conversion Job.
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <span class="label label-primary">GET</span>
+      <code>/api/v1/status/:jobId</code>
+      <br /><br />
+
+      <strong>Params:</strong>
+      <br />
+
+      <ul>
+        <li>jobId</li>
+      </ul>
+    </td>
+    <td>
+      Checks status of a previously created job.
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <span class="label label-primary">GET</span>
+      <code>/api/v1/resolve/:jobId/:nicename</code>
+      <br /><br />
+
+      <strong>Params:</strong>
+      <br />
+
+      <ul>
+        <li>jobId</li>
+        <li>nicename</li>
+      </ul>
+    </td>
+    <td>
+      Retrieves the converted output file.
+    </td>
+  </tr>
+</table>

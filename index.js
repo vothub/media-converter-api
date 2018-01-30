@@ -2,27 +2,29 @@
 
 const _ = require('lodash');
 const express = require('express');
-const clarg = require('clarg');
 const ffbinLib = require('./lib/ffbinLib');
 const fmt = require('./lib/fmt');
 const routes = require('./routes');
+const config = require('./config');
 
-const clOpts = clarg().opts;
-
-function startApp (port) {
-  const portParsed = parseInt(port, 10);
-  const portFinal = (port == portParsed) ? portParsed : 3000;
-
+function startApp () {
   console.log(`[${fmt.date()} ${fmt.time()}] Ensuring ffmpeg and ffprobe binaries are present.`);
   ffbinLib.ensureBinaries(function (err, data) {
     console.log(`[${fmt.date()} ${fmt.time()}] ffmpeg and ffprobe binaries are present.`);
     const app = express();
     app.disable('x-powered-by');
 
+    // register hbs
+    const hbs = config.views.engine;
+    hbs.registerPartials(config.views.partialsPath);
+    app.engine('html', hbs.__express);
+    app.set('view engine', 'html');
+
     routes(app);
 
-    app.listen(portFinal, function () {
-      console.log(`[${fmt.date()} ${fmt.time()}] Great Converto listening on port ${portFinal}`);
+    // start app
+    app.listen(config.port, function () {
+      console.log(`[${fmt.date()} ${fmt.time()}] Great Converto listening on port ${config.port}`);
     });
 
     return app;
@@ -30,4 +32,4 @@ function startApp (port) {
 
 }
 
-startApp(clOpts.port || clOpts.p);
+startApp();

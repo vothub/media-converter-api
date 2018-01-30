@@ -27,4 +27,31 @@ This starts server at `http://localhost:3000`.
 - Support waveform generation
 - Support screenshot generation
 - Add web hooks for notifications
+
+JSON Api
+{
+  file: {url},
+  targets: ['gif', 'webm'],
+  opts: {
+    screenshots: 5,
+    screenshotFormat: 'png'
+  }
+}
+{
+  file: {url},
+  targets: 'jpg',
+  opts: {
+    pages: '1-3'
+  }
+}
+{
+  file: {base64},
+  targets: 'jpg'
+}
+{
+  file: {url},
+  targets: 'html'
+}
+
+
 -->
