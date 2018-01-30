@@ -8,7 +8,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "GPL-2.0",
   "dependencies": {
     "async": "^2.4.1",
     "busboy": "^0.2.14",
