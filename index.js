@@ -22,9 +22,13 @@ function startApp () {
 
     routes(app);
 
+    if (config.appNetwork === 'private' && !config.appNetworkInterface) {
+      console.log('Couldnt determine private interface - restricting to localhost');
+      config.appNetworkInterface = '127.0.0.1';
+    }
     // start app
-    app.listen(config.port, config.appPublic ? '0' : 'localhost', function () {
-      console.log(`[${fmt.date()} ${fmt.time()}] Great Converto listening on port ${config.port}`);
+    app.listen(config.appPort, config.appNetworkInterface, 0, function () {
+      console.log(`[${fmt.date()} ${fmt.time()}] Great Converto listening on port ${config.appPort}`);
     });
 
     return app;
