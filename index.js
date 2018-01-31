@@ -23,7 +23,7 @@ function startApp () {
     routes(app);
 
     // start app
-    app.listen(config.port, function () {
+    app.listen(config.port, config.appPublic ? '0' : 'localhost', function () {
       console.log(`[${fmt.date()} ${fmt.time()}] Great Converto listening on port ${config.port}`);
     });
 
