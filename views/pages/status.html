@@ -7,5 +7,6 @@
 {{#if data.url}}
   <p><a href="{{data.url}}" class="btn btn-md btn-primary">Download</a></p>
 {{else}}
-  <p>Progress: {{data.progress}}%</p>
+  <p>Progress: {{#if data.progress}}{{data.progress}}{{else}}0{{/if}}%</p>
+  <meta http-equiv="refresh" content="3">
 {{/if}}
