@@ -2,6 +2,7 @@ const Busboy = require('busboy');
 const ffmpeg = require('../../../lib/ffmpeg');
 const jobLib = require('../../../lib/job');
 const filenameLib = require('../../../lib/filename');
+const config = require('../../../config');
 const os = require('os');
 const fs = require('fs-extra');
 const inspect = require('util').inspect;
@@ -33,7 +34,7 @@ function handlerMultipart(req, res) {
     console.log('Field [' + fieldname + ']: value: ' + inspect(val));
     // todo override data.fileBasename
 
-    if (fieldname === 'converto-format') {
+    if (fieldname === 'format') {
       jobData.format = val;
     }
   });
@@ -42,10 +43,7 @@ function handlerMultipart(req, res) {
     const jobId = jobLib.create(jobData);
     jobLib.start(jobId);
 
-    // let rtn = 'Upload complete.';
-    // rtn += '<br /><a href="/api/v1/status/' + jobId + ' ">Job #' + jobId + '</a>';
-    // res.send(rtn);
-    res.redirect('/api/v1/status/' + jobId);
+    res.json({id: jobId, url: config.baseUrl + '/api/v1/status/' + jobId});
   });
 
   // Pass the stream
