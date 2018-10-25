@@ -2,7 +2,7 @@
 
 [![Issues](https://img.shields.io/github/issues/vot/greatconverto.svg)](https://github.com/vot/greatconverto/issues)
 [![Build status](https://img.shields.io/circleci/project/github/vot/greatconverto/master.svg)](https://circleci.com/gh/vot/greatconverto/tree/master)
-[![MIT License](https://img.shields.io/badge/license-MIT.svg)](https://spdx.org/licenses/MIT)
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://spdx.org/licenses/MIT)
 
 
 This service transcodes media files.
