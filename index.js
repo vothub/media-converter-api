@@ -28,7 +28,7 @@ function startApp () {
     }
     // start app
     app.listen(config.appPort, config.appNetworkInterface, 0, function () {
-      console.log(`[${fmt.date()} ${fmt.time()}] Great Converto listening on port ${config.appPort}`);
+      console.log(`[${fmt.date()} ${fmt.time()}] VotHub Media Converter API listening on port ${config.appPort}`);
     });
 
     return app;
