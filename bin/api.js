@@ -1,9 +1,9 @@
 'use strict';
 
 const express = require('express');
+const config = require('../lib/config');
 const fmt = require('../lib/fmt');
 const routes = require('../routes');
-const config = require('../config');
 
 function startApp () {
   const app = express();

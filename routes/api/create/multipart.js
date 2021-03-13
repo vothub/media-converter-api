@@ -3,9 +3,9 @@ const fs = require('fs-extra');
 const os = require('os');
 const inspect = require('util').inspect;
 
+const config = require('../../../lib/config');
 const jobLib = require('../../../lib/job');
 const filenameLib = require('../../../lib/filename');
-const config = require('../../../config');
 
 function handlerMultipart(req, res) {
   const tmpDir = os.tmpDir();

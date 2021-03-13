@@ -8,7 +8,7 @@
  * In addition a purge method needs to be in place to remove jobs older than 2w
  */
 
-const config = require('../../config');
+const config = require('../../lib/config');
 var MongoClient = require('mongodb').MongoClient;
 var url = config.get('mongoUrl');
 
