@@ -1,2 +1,4 @@
 node_modules
-bin
+bin/ffmpeg
+bin/ffprobe
+package-lock.json

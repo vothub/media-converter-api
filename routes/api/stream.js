@@ -25,7 +25,7 @@ function apiDispatcherRetrieve (req, res) {
 
   // Simple jail for this not to jump out of temp dir
   const filepath = path.resolve(job.pathOut);
-  const tempDir = os.tmpDir() + '/greatconverto/output/';
+  const tempDir = os.tmpDir() + '/vhmc/output/';
   if (filepath.indexOf(tempDir) !== 0) {
     return res.send('Back to jail with you');
   }

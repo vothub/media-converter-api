@@ -1,15 +1,15 @@
 const Busboy = require('busboy');
-const ffmpeg = require('../../../lib/ffmpeg');
+const fs = require('fs-extra');
+const os = require('os');
+const inspect = require('util').inspect;
+
 const jobLib = require('../../../lib/job');
 const filenameLib = require('../../../lib/filename');
 const config = require('../../../config');
-const os = require('os');
-const fs = require('fs-extra');
-const inspect = require('util').inspect;
 
 function handlerMultipart(req, res) {
   const tmpDir = os.tmpDir();
-  const destination = tmpDir + '/greatconverto/input';
+  const destination = tmpDir + '/vhmc/input';
   fs.ensureDirSync(destination);
   console.log('tmpDir: ', destination);
 
@@ -18,7 +18,7 @@ function handlerMultipart(req, res) {
     format: 'mp4'
   };
 
-  busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
+  busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
     console.log('File [' + fieldname + ']: filename: ' + filename + ', encoding: ' + encoding + ', mimetype: ' + mimetype);
 
     if (filename) {
@@ -30,7 +30,7 @@ function handlerMultipart(req, res) {
     file.pipe(fs.createWriteStream(destination + '/' + filename));
   });
 
-  busboy.on('field', function(fieldname, val, fieldnameTruncated, valTruncated, encoding, mimetype) {
+  busboy.on('field', (fieldname, val, fieldnameTruncated, valTruncated, encoding, mimetype) => {
     console.log('Field [' + fieldname + ']: value: ' + inspect(val));
     // todo override data.fileBasename
 
