@@ -8,21 +8,21 @@ function apiDispatcherRetrieve (req, res) {
   const job = jobLib.get(jobId);
 
   if (!jobId) {
-    return res.render('pages/error', {error: 'Please specify jobId.'});
+    return res.render('pages/error', { error: 'Please specify jobId.' });
   }
 
   if (!job || typeof job !== 'object') {
-    return res.render('pages/error', {error: 'Job not found.'});
+    return res.render('pages/error', { error: 'Job not found.' });
   }
 
   if (job.progress === 100) {
     const nicename = _.last(job.pathOut.split('/'));
-    job.url = config.baseUrl + '/api/v1/stream/' + jobId + '/' + nicename;
+    job.url = `${config.baseUrl}/api/v1/stream/${jobId}/${nicename}`;
   }
 
   const data = _.omit(job, ['pathIn', 'pathOut']);
 
-  res.render('pages/status', {jobId, data});
+  res.render('pages/status', { jobId, data });
 }
 
 module.exports = apiDispatcherRetrieve;

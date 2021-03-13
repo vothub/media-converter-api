@@ -21,7 +21,6 @@ function checkForNewJobs() {
   return setTimeout(checkForNewJobs, POLLING_FREQUENCY_MS);
 }
 
-
 console.log(`[${fmt.date()} ${fmt.time()}] Ensuring ffmpeg and ffprobe binaries are present.`);
 
 ffbinLib.ensureBinaries((err, data) => {

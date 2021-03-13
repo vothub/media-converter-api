@@ -18,19 +18,19 @@ function handlerMultipart(req, res) {
   };
 
   busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
-    console.log('File [' + fieldname + ']: filename: ' + filename + ', encoding: ' + encoding + ', mimetype: ' + mimetype);
+    console.log(`File [${fieldname}]: filename: ${filename}, encoding: ${encoding}, mimetype: ${mimetype}`);
 
     if (filename) {
-      console.log('Uploading ' + filename);
+      console.log(`Uploading ${filename}`);
       jobData.fileBasename = filenameLib.getFileBasename(filename);
-      jobData.pathIn = destination + '/' + filename;
+      jobData.pathIn = `${destination}/${filename}`;
     }
 
-    file.pipe(fs.createWriteStream(destination + '/' + filename));
+    file.pipe(fs.createWriteStream(`${destination}/${filename}`));
   });
 
   busboy.on('field', (fieldname, val, fieldnameTruncated, valTruncated, encoding, mimetype) => {
-    console.log('Field [' + fieldname + ']: value: ' + inspect(val));
+    console.log(`Field [${fieldname}]: value: ${inspect(val)}`);
     // todo override data.fileBasename
 
     if (fieldname === 'vhmc-format') {
@@ -41,7 +41,7 @@ function handlerMultipart(req, res) {
   busboy.on('finish', () => {
     const jobId = jobLib.create(jobData);
 
-    res.redirect('/status/' + jobId);
+    res.redirect(`/status/${jobId}`);
   });
 
   // Pass the stream

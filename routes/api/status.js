@@ -12,12 +12,12 @@ function apiDispatcherRetrieve (req, res) {
   }
 
   if (!job || typeof job !== 'object') {
-    return res.render('pages/error', {error: 'Job not found'});
+    return res.render('pages/error', { error: 'Job not found' });
   }
 
   if (job.progress === 100) {
     const nicename = _.last(job.pathOut.split('/'));
-    job.url = config.baseUrl + '/api/v1/stream/' + jobId + '/' + nicename;
+    job.url = `${config.baseUrl}/api/v1/stream/${jobId}/${nicename}`;
   }
 
   const data = _.omit(job, ['pathIn', 'pathOut']);
