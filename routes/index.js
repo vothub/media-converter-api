@@ -1,5 +1,5 @@
 const express = require('express');
-const config = require('../config');
+const config = require('../lib/config');
 
 function registerRoutes(app) {
   app.use('/public', express.static('public'));

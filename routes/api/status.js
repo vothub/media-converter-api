@@ -1,6 +1,6 @@
 const _ = require('lodash');
 const jobLib = require('../../lib/job');
-const config = require('../../config');
+const config = require('../../lib/config');
 
 function apiDispatcherRetrieve (req, res) {
   const jobId = req.params.jobId;
