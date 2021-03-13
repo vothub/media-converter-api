@@ -25,12 +25,12 @@ function apiDispatcherRetrieve (req, res) {
 
   // Simple jail for this not to jump out of temp dir
   const filepath = path.resolve(job.pathOut);
-  const tempDir = `${os.tmpDir()}/vhmc/output/`;
+  const tempDir = `${os.tmpdir()}/vhmc/output/`;
   if (filepath.indexOf(tempDir) !== 0) {
     return res.send('Back to jail with you');
   }
 
-  fs.exists(filepath, (exists) => {
+  return fs.exists(filepath, (exists) => {
     if (!exists) {
       console.log(`File does not exist: ${filepath}`);
       res.writeHead(200, { 'Content-Type': 'text/plain' });
@@ -42,7 +42,7 @@ function apiDispatcherRetrieve (req, res) {
     // res.writeHead(200, mimeType);
 
     const fileStream = fs.createReadStream(filepath);
-    fileStream.pipe(res);
+    return fileStream.pipe(res);
   });
 }
 
