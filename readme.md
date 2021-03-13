@@ -1,4 +1,4 @@
-# Media Converter API
+# Media Converter
 
 [![media-converter.vothub.com](https://img.shields.io/website.svg?down_color=red&down_message=down&label=media-converter.vothub.com&up_color=green&up_message=ok&url=https%3A%2F%2Fmedia-converter.vothub.com)](https://media-converter.vothub.com)
 [![Issues](https://img.shields.io/github/issues/vothub/media-converter-api.svg)](https://github.com/vothub/media-converter-api/issues)
@@ -6,7 +6,9 @@
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://spdx.org/licenses/MIT)
 
 
-This service transcodes media files.
+This service transcodes media files from one format to another.
+
+It uses server and worker components to manage concurrency.
 
 *TL;DR: ffmpeg as a service.*
 
