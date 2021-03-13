@@ -1,10 +1,11 @@
+/* eslint-disable global-require */
 const express = require('express');
 const config = require('../lib/config');
 
 function registerRoutes(app) {
   app.use('/public', express.static('public'));
 
-  app.use('/', function (req, res, next) {
+  app.use('/', (req, res, next) => {
     res.locals.baseUrl = config.baseUrl;
     next();
   });

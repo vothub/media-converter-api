@@ -9,7 +9,7 @@ const filenameLib = require('../../../lib/filename');
 
 function handlerMultipart(req, res) {
   const tmpDir = os.tmpDir();
-  const destination = tmpDir + '/vhmc/input';
+  const destination = `${tmpDir}/vhmc/input`;
   fs.ensureDirSync(destination);
   console.log('tmpDir: ', destination);
 
@@ -19,19 +19,19 @@ function handlerMultipart(req, res) {
   };
 
   busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
-    console.log('File [' + fieldname + ']: filename: ' + filename + ', encoding: ' + encoding + ', mimetype: ' + mimetype);
+    console.log(`File [${fieldname}]: filename: ${filename}, encoding: ${encoding}, mimetype: ${mimetype}`);
 
     if (filename) {
-      console.log('Uploading ' + filename);
+      console.log(`Uploading ${filename}`);
       jobData.fileBasename = filenameLib.getFileBasename(filename);
-      jobData.pathIn = destination + '/' + filename;
+      jobData.pathIn = `${destination}/${filename}`;
     }
 
-    file.pipe(fs.createWriteStream(destination + '/' + filename));
+    file.pipe(fs.createWriteStream(`${destination}/${filename}`));
   });
 
   busboy.on('field', (fieldname, val, fieldnameTruncated, valTruncated, encoding, mimetype) => {
-    console.log('Field [' + fieldname + ']: value: ' + inspect(val));
+    console.log(`Field [${fieldname}]: value: ${inspect(val)}`);
     // todo override data.fileBasename
 
     if (fieldname === 'format') {
@@ -39,11 +39,11 @@ function handlerMultipart(req, res) {
     }
   });
 
-  busboy.on('finish', function() {
+  busboy.on('finish', () => {
     const jobId = jobLib.create(jobData);
     jobLib.start(jobId);
 
-    res.json({id: jobId, url: config.baseUrl + '/api/v1/status/' + jobId});
+    res.json({ id: jobId, url: `${config.baseUrl}/api/v1/status/${jobId}` });
   });
 
   // Pass the stream

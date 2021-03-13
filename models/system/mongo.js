@@ -8,14 +8,15 @@
  * In addition a purge method needs to be in place to remove jobs older than 2w
  */
 
+const MongoClient = require('mongodb').MongoClient;
 const config = require('../../lib/config');
-var MongoClient = require('mongodb').MongoClient;
-var url = config.get('mongoUrl');
+
+const url = config.get('mongoUrl');
 
 function _getClient(callback) {
-  MongoClient.connect(url, function(err, db) {
+  MongoClient.connect(url, (err, db) => {
     if (err || !db) {
-      console.log('Couldn\'t connect to Mongo at ' + url);
+      console.log(`Couldn't connect to Mongo at ${url}`);
       if (err) {
         console.error(err);
       }
@@ -31,10 +32,10 @@ const transcodeJobsCollectionName = 'transcode-jobs';
 
 const transcodeJobsCollection = {
   upsertOne: function upsertOne(queryWhere, querySet, callback) {
-    _getClient(function (error, db) {
+    _getClient((error, db) => {
       const col = db.collection(transcodeJobsCollectionName);
 
-      col.updateOne(queryWhere, querySet, {upsert: true}, function (err, r) {
+      col.updateOne(queryWhere, querySet, { upsert: true }, (err, r) => {
         // console.log(r.upsertedId._id);
         db.close();
         return callback(err, r);
@@ -43,22 +44,21 @@ const transcodeJobsCollection = {
   },
 
   findOne: function findOne(query, callback) {
-    _getClient(function (e, db) {
-      var col = db.collection(transcodeJobsCollectionName);
+    _getClient((e, db) => {
+      const col = db.collection(transcodeJobsCollectionName);
 
-      col.find(query).limit(1).toArray(function(err, reply) {
+      col.find(query).limit(1).toArray((err, reply) => {
         db.close();
         return callback(err, (reply && reply.length ? reply[0] : null));
       });
     });
   },
 
-
   find: function find(query, callback) {
-    _getClient(function (e, db) {
-      var col = db.collection(transcodeJobsCollectionName);
+    _getClient((e, db) => {
+      const col = db.collection(transcodeJobsCollectionName);
 
-      col.find(query).toArray(function(err, reply) {
+      col.find(query).toArray((err, reply) => {
         db.close();
         return callback(err, reply);
       });
@@ -66,18 +66,15 @@ const transcodeJobsCollection = {
   },
 
   deleteOne: function deleteOne(query, callback) {
-    _getClient(function (e, db) {
-      var col = db.collection(transcodeJobsCollectionName);
+    _getClient((e, db) => {
+      const col = db.collection(transcodeJobsCollectionName);
 
-      col.deleteOne(query, function(err, reply) {
+      col.deleteOne(query, (err, reply) => {
         return callback(null, reply);
       });
     });
   }
 };
-
-
-
 
 module.exports = {
   // getClient: getClient,

@@ -12,7 +12,7 @@ function apiDispatcherRetrieve (req, res) {
     return res.send('Please specify jobId.');
   }
 
-  var job = jobLib.get(jobId);
+  const job = jobLib.get(jobId);
 
   if (!job) {
     return res.send('Invalid job');
@@ -20,21 +20,20 @@ function apiDispatcherRetrieve (req, res) {
 
   if (!nicename) {
     const redirectNicename = _.last(job.pathOut.split('/'));
-    return res.redirect('/api/v1/stream/' + jobId + '/' + redirectNicename);
+    return res.redirect(`/api/v1/stream/${jobId}/${redirectNicename}`);
   }
 
   // Simple jail for this not to jump out of temp dir
   const filepath = path.resolve(job.pathOut);
-  const tempDir = os.tmpDir() + '/vhmc/output/';
+  const tempDir = `${os.tmpDir()}/vhmc/output/`;
   if (filepath.indexOf(tempDir) !== 0) {
     return res.send('Back to jail with you');
   }
 
-
-  fs.exists(filepath, function(exists) {
+  fs.exists(filepath, (exists) => {
     if (!exists) {
-      console.log('File does not exist: ' + filepath);
-      res.writeHead(200, {'Content-Type': 'text/plain'});
+      console.log(`File does not exist: ${filepath}`);
+      res.writeHead(200, { 'Content-Type': 'text/plain' });
       res.write('404 Not Found');
       return res.end();
     }

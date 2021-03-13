@@ -16,7 +16,7 @@ function apiDispatcherConvert(req, res) {
   }
 
   // other methods throw error
-  return res.status(400).send('Content-type must equal "application/json" or "multipart/form-data". Provided: "' + contentType + '"');
+  return res.status(400).send(`Content-type must equal "application/json" or "multipart/form-data". Provided: "${contentType}"`);
 }
 
 module.exports = apiDispatcherConvert;
