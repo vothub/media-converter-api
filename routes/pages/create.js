@@ -7,7 +7,7 @@ const jobLib = require('../../lib/job');
 const filenameLib = require('../../lib/filename');
 
 function handlerMultipart(req, res) {
-  const tmpDir = os.tmpDir();
+  const tmpDir = os.tmpdir();
   const destination = `${tmpDir}/vhmc/input`;
   fs.ensureDirSync(destination);
   console.log('tmpDir: ', destination);

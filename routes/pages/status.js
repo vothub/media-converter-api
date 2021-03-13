@@ -4,7 +4,7 @@ const config = require('../../lib/config');
 
 function apiDispatcherRetrieve (req, res) {
   const jobId = req.params.jobId;
-  const contentType = req.headers['content-type'] || '';
+  // const contentType = req.headers['content-type'] || '';
   const job = jobLib.get(jobId);
 
   if (!jobId) {
@@ -22,7 +22,7 @@ function apiDispatcherRetrieve (req, res) {
 
   const data = _.omit(job, ['pathIn', 'pathOut']);
 
-  res.render('pages/status', { jobId, data });
+  return res.render('pages/status', { jobId, data });
 }
 
 module.exports = apiDispatcherRetrieve;
