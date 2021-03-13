@@ -13,11 +13,27 @@ This service transcodes media files.
 Development still at an early stage.
 
 
-## Usage
+## Quickstart
+```
+# Clone the repo
+git clone https://github.com/vothub/media-converter-api.git
+cd media-converter-api
 
-Checkout, install dependencies with `npm install` and start the app with `npm start`.
+# Install dependencies
+npm install
 
-This starts server at `http://localhost:3000`.
+# Start the app
+npm start
+```
+
+This starts the application at `http://localhost:3000`
+with a single worker thread and a single server thread.
+
+## Configuration
+
+- `PORT`
+- `BASE_URL`
+- `NETWORK`
 
 
 <!--
