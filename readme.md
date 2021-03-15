@@ -38,16 +38,27 @@ with a single worker thread and a single server thread.
 - `NETWORK`
 
 
-<!--
 ## TODO
 
+- Add database for persistence
+- Support for S3 Signed URLs
+- Logging via debug module
+- Documentation - job schema, statuses, data flow, presets
+- Less synchronous :)
+
+<!--
+- Queue monitoring
+- Auth
+- Documentation - deployments, multiple nodes
+- Add web hooks / callback URLs for notifications
 - Support image conversions
 - Support PDF/doc conversions
 - Support waveform generation
-- Support screenshot generation
-- Add web hooks for notifications
+- Support screenshot generation (from videos and text documents)
+-->
 
-JSON Api
+<!--
+JSON API
 {
   file: {url},
   targets: ['gif', 'webm'],
@@ -71,5 +82,4 @@ JSON Api
   file: {url},
   targets: 'html'
 }
-
 -->
