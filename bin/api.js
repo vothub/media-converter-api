@@ -12,18 +12,18 @@ function startApp () {
   // register hbs
   const hbs = config.views.engine;
   hbs.registerPartials(config.views.partialsPath);
-  app.engine('html', hbs.__express);
-  app.set('view engine', 'html');
+  app.engine('hbs', hbs.__express);
+  app.set('view engine', 'hbs');
 
   routes(app);
 
   if (config.appNetwork === 'private' && !config.appNetworkInterface) {
-    console.log('Couldnt determine private interface - restricting to localhost');
+    console.log('Interface not specified - restricting to localhost');
     config.appNetworkInterface = '127.0.0.1';
   }
   // start app
   app.listen(config.appPort, config.appNetworkInterface, 0, () => {
-    console.log(`[${fmt.date()} ${fmt.time()}] Media Converter API listening on port ${config.appPort}`);
+    console.log(`[${fmt.timestampNow()}] Media Converter listening on port ${config.appPort}`);
   });
 
   return app;

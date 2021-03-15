@@ -4,7 +4,7 @@ const config = require('../../lib/config');
 
 function apiDispatcherRetrieve (req, res) {
   const jobId = req.params.jobId;
-  const contentType = req.headers['content-type'] || '';
+  // const contentType = req.headers['content-type'] || '';
   const job = jobLib.get(jobId);
 
   if (!jobId) {
