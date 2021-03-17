@@ -41,7 +41,7 @@ function handlerMultipart(req, res) {
   busboy.on('finish', () => {
     const jobId = jobLib.create(jobData);
 
-    res.redirect(`/status/${jobId}`);
+    res.redirect(`/jobs/${jobId}`);
   });
 
   // Pass the stream

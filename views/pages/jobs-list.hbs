@@ -1,0 +1,26 @@
+<h2>All jobs</h2>
+
+<p>Total: {{jobs.total}} jobs</p>
+
+<table class="table">
+  <tr>
+    <th>jobid</th>
+    <th>origin</th>
+    <th>owner</th>
+    <th>requested_outputs</th>
+    <th>time_created</th>
+    <th></th>
+  </tr>
+{{#each jobs.data}}
+  <tr>
+    <td>{{this.job_id}}</td>
+    <td>{{this.origin}}</td>
+    <td>{{this.owner}}</td>
+    <td>{{this.requested_outputs}}</td>
+    <td>{{this.time_created}}</td>
+    <td>
+      <a href="/jobs/{{this.job_id}}" class="btn btn-md btn-primary">View</a>
+    </td>
+  </tr>
+{{/each}}
+</table>

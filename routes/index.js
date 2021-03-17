@@ -14,8 +14,8 @@ function registerRoutes(app) {
   app.get('/', require('./pages/home'));
   app.get('/convert', require('./pages/convert'));
   app.post('/create', require('./pages/create'));
-  app.get('/status', require('./pages/jobs'));
-  app.get('/status/:jobId', require('./pages/status'));
+  app.get('/jobs', require('./pages/jobs/list'));
+  app.get('/jobs/:jobId', require('./pages/jobs/viewJobStatus'));
   app.get('/api', require('./pages/api'));
 
   app.post('/api/v1/create', require('./api/create'));
