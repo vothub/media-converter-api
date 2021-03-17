@@ -12,27 +12,44 @@ const DB_NAME = process.env.DB_NAME || 'vhmc';
 const DB_USER = process.env.DB_USER || '';
 const DB_PASS = process.env.DB_PASS || '';
 
-// trace logs :)
-console.log('DB_URL', DB_URL);
-console.log('DB_NAME', DB_NAME);
-console.log('DB_USER', DB_USER);
-console.log('DB_PASS', DB_PASS);
-
 function processJob(jobId) {
   console.log(`Processing job ${jobId}`);
-  jobLib.start(jobId);
-  return checkForNewJobs();
+  return jobLib.start(jobId, () => {
+    // once finished look for a new job
+    return checkForNewJobs();
+  });
 }
 
-function checkForNewJobs() {
-  console.log('Checking for new jobs...');
-  const jobId = null;
-  if (jobId) {
-    return processJob(jobId);
+function getFirstJobId(jobsArray) {
+  if (!Array.isArray(jobsArray) || !jobsArray.length) {
+    return null;
+  }
+  const validJobs = jobsArray.filter(job => !!job.job_id);
+  if (!validJobs.length) {
+    return null;
   }
 
-  // set up the next check after defined polling frequency timeout
-  return setTimeout(checkForNewJobs, POLLING_FREQUENCY_MS);
+  return validJobs[0].job_id;
+}
+
+// async fn but no callback - detached on purpose
+function checkForNewJobs() {
+  console.log('Checking for new jobs...');
+  return jobLib.getAllJobs({ status: 'new' }, (jobs) => {
+    if (jobs.error) {
+      console.log('Error when fetching jobs!', jobs.error);
+    } else if (!Array.isArray(jobs.data) || !jobs.data.length) {
+      console.log('No new jobs found');
+    }
+    const firstJobId = getFirstJobId(jobs.data);
+    if (firstJobId) {
+      console.log(`First available job: ${firstJobId}`)
+      return processJob(firstJobId);
+    }
+
+    // set up the next check after defined polling frequency timeout
+    return setTimeout(checkForNewJobs, POLLING_FREQUENCY_MS);
+  });
 }
 
 console.log(`[${fmt.timestampNow()}] Ensuring ffmpeg and ffprobe binaries are present.`);
