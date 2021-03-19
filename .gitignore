@@ -2,3 +2,4 @@ node_modules
 bin/ffmpeg
 bin/ffprobe
 package-lock.json
+.env
