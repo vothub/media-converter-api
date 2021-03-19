@@ -20,6 +20,7 @@ function processJob(jobId) {
   });
 }
 
+// claim first unassigned job
 function getFirstJobId(jobsArray) {
   if (!Array.isArray(jobsArray) || !jobsArray.length) {
     return null;
@@ -52,13 +53,20 @@ function checkForNewJobs() {
   });
 }
 
-console.log(`[${fmt.timestampNow()}] Ensuring ffmpeg and ffprobe binaries are present.`);
+/**
+ * Main function - entry point
+ */
+function main() {
+  console.log(`[${fmt.timestampNow()}] Ensuring ffmpeg and ffprobe binaries are present.`);
 
-ffbinariesWrapper.ensureBinaries((err) => {
-  if (err) {
-    console.log(`[${fmt.timestampNow()}] ffmpeg and ffprobe binaries could not be located.`);
-    return process.exit(1);
-  }
-  console.log(`[${fmt.timestampNow()}] ffmpeg and ffprobe binaries are present.`);
-  return checkForNewJobs();
-});
+  ffbinariesWrapper.ensureBinaries((err) => {
+    if (err) {
+      console.log(`[${fmt.timestampNow()}] ffmpeg and ffprobe binaries could not be located.`);
+      return process.exit(1);
+    }
+    console.log(`[${fmt.timestampNow()}] ffmpeg and ffprobe binaries are present.`);
+    return checkForNewJobs();
+  });
+}
+
+main();
