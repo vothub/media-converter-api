@@ -7,10 +7,10 @@ const pollingFreqParsed = parseInt(pollingFreqRaw, 10);
 const pollingFreq = (pollingFreqRaw == pollingFreqParsed) ? pollingFreqParsed : 3000; // eslint-disable-line eqeqeq
 
 const POLLING_FREQUENCY_MS = pollingFreq;
-const DB_URL = process.env.DB_URL || 'localhost:5432';
-const DB_NAME = process.env.DB_NAME || 'vhmc';
-const DB_USER = process.env.DB_USER || '';
-const DB_PASS = process.env.DB_PASS || '';
+// const DB_URL = process.env.DB_URL || 'localhost:5432';
+// const DB_NAME = process.env.DB_NAME || 'vhmc';
+// const DB_USER = process.env.DB_USER || '';
+// const DB_PASS = process.env.DB_PASS || '';
 
 function processJob(jobId) {
   console.log(`Processing job ${jobId}`);
@@ -44,7 +44,7 @@ function checkForNewJobs() {
     }
     const firstJobId = getFirstJobId(jobs.data);
     if (firstJobId) {
-      console.log(`First available job: ${firstJobId}`)
+      console.log(`First available job: ${firstJobId}`);
       return processJob(firstJobId);
     }
 
