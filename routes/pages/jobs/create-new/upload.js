@@ -3,8 +3,8 @@ const os = require('os');
 const fs = require('fs-extra');
 const inspect = require('util').inspect;
 
-const jobLib = require('../../lib/job');
-const filenameLib = require('../../lib/filename');
+const jobLib = require('../../../../lib/job');
+const filenameLib = require('../../../../lib/filename');
 
 function handlerMultipart(req, res) {
   const tmpDir = os.tmpdir();
@@ -41,7 +41,7 @@ function handlerMultipart(req, res) {
   busboy.on('finish', () => {
     const jobId = jobLib.create(jobData);
 
-    res.redirect(`/jobs/${jobId}`);
+    res.redirect(`/jobs/view/${jobId}`);
   });
 
   // Pass the stream

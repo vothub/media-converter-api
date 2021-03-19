@@ -57,14 +57,14 @@ function checkForNewJobs() {
  * Main function - entry point
  */
 function main() {
-  console.log(`[${fmt.timestampNow()}] Ensuring ffmpeg and ffprobe binaries are present.`);
+  console.log(`[${fmt.formatDateTimeString()}] Ensuring ffmpeg and ffprobe binaries are present.`);
 
   ffbinariesWrapper.ensureBinaries((err) => {
     if (err) {
-      console.log(`[${fmt.timestampNow()}] ffmpeg and ffprobe binaries could not be located.`);
+      console.log(`[${fmt.formatDateTimeString()}] ffmpeg and ffprobe binaries could not be located.`);
       return process.exit(1);
     }
-    console.log(`[${fmt.timestampNow()}] ffmpeg and ffprobe binaries are present.`);
+    console.log(`[${fmt.formatDateTimeString()}] ffmpeg and ffprobe binaries are present.`);
     return checkForNewJobs();
   });
 }

@@ -10,20 +10,24 @@ function registerRoutes(app) {
     next();
   });
 
-  // App status
-  app.get('/', require('./pages/home'));
-  app.get('/convert', require('./pages/convert'));
-  app.post('/create', require('./pages/create'));
-  app.get('/jobs', require('./pages/jobs/list'));
-  app.get('/jobs/:jobId', require('./pages/jobs/viewJobStatus'));
-  app.get('/api', require('./pages/api'));
-
+  // API
   app.post('/api/v1/create', require('./api/create'));
+
   app.get('/api/v1/status', require('./api/status'));
   app.get('/api/v1/status/:jobId', require('./api/status'));
+
   app.get('/api/v1/stream', require('./api/stream'));
   app.get('/api/v1/stream/:jobId', require('./api/stream'));
   app.get('/api/v1/stream/:jobId/:nicename', require('./api/stream'));
+
+  // UI
+  // app.get('/', require('./pages/home'));
+  app.get('/', require('./pages/jobs/list'));
+  app.get('/jobs', (req, res) => res.redirect('/'));
+  app.get('/jobs/create-new', require('./pages/jobs/create-new/render'));
+  app.post('/jobs/create-new/upload', require('./pages/jobs/create-new/upload'));
+  app.get('/jobs/view/:jobId', require('./pages/jobs/view'));
+  app.get('/api', require('./pages/api'));
 }
 
 module.exports = registerRoutes;
