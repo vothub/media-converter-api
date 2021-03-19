@@ -18,12 +18,11 @@
     "test": "mocha **/*.spec.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Vot",
   "license": "MIT",
   "dependencies": {
     "async": "^2.4.1",
     "busboy": "^0.2.14",
-    "clarg": "0.0.4",
     "concurrently": "^6.0.0",
     "debug": "^4.1.1",
     "dotenv": "^8.1.0",
