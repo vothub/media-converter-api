@@ -12,6 +12,8 @@ function startApp () {
   // register hbs
   const hbs = config.views.engine;
   hbs.registerPartials(config.views.partialsPath);
+  hbs.registerHelper('stringifyJson', fmt.stringifyJson);
+  hbs.registerHelper('formatDateTimeString', fmt.formatDateTimeString);
   app.engine('hbs', hbs.__express);
   app.set('view engine', 'hbs');
 
@@ -23,7 +25,7 @@ function startApp () {
   }
   // start app
   app.listen(config.appPort, config.appNetworkInterface, 0, () => {
-    console.log(`[${fmt.timestampNow()}] Media Converter listening on port ${config.appPort}`);
+    console.log(`[${fmt.formatDateTimeString()}] Media Converter listening on port ${config.appPort}`);
   });
 
   return app;

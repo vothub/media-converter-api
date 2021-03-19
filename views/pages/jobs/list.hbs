@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="col-xs-8 col-sm-8 text-left">
+    <h2>Dashboard</h2>
+    <p>Total jobs: {{jobs.total}} | Jobs in queue: {{jobs.total}}</p>
+  </div>
+
+  <div class="col-xs-4 col-sm-4 text-right">
+    <a href="/jobs/create-new" class="btn btn-sm btn-primary">Create a new job</a>
+  </div>
+</div>
+
+<br />
+
+<div class="container">
+  <div class="col-xs-12">
+    <table class="table table-striped table-hover table-border-radius">
+      <tr>
+        <th>status</th>
+        <th>jobid</th>
+        <th>origin</th>
+        <th>owner</th>
+        <th>requested_outputs</th>
+        <th>time_created</th>
+        <th>-</th>
+      </tr>
+    {{#each jobs.data}}
+      <tr>
+        <td><span class="badge badge-warning">{{this.status}}</span></td>
+        <td><code>{{this.job_id}}</code></td>
+        <td>{{this.origin}}</td>
+        <td>{{this.owner}}</td>
+        <td>{{this.requested_outputs}}</td>
+        <td>{{formatDateTimeString this.time_created}}</td>
+        <td>
+          <a href="/jobs/view/{{this.job_id}}" class="xbtn xbtn-sm xbtn-default">Inspect</a>
+        </td>
+      </tr>
+    {{/each}}
+    </table>
+  </div>
+</div>

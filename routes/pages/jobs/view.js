@@ -26,7 +26,7 @@ function apiDispatcherRetrieve (req, res) {
 
     const data = _.omit(job, ['pathIn', 'pathOut']);
 
-    return res.render('pages/status', { jobId, data });
+    return res.render('pages/jobs/view', { jobId, data });
   });
 }
 

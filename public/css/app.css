@@ -1,8 +1,8 @@
 html {position: relative; min-height: 100%;}
 body {padding-top: 40px}
-h1, h2, h3 {text-align: center}
+/* h1, h2, h3 {text-align: center} */
 h1 {font-size: 30px; font-weight: 300;}
-h2 {font-size: 18px; font-weight: 300;}
+h2 {font-size: 18px; font-weight: 300; margin: 0}
 h1 a, h1 a:hover, h1 a:focus {color: black; text-decoration: none}
 h1 img.icon {top: -3px; position: relative; height: 46px;}
 

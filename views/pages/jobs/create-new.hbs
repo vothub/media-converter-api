@@ -1,12 +1,12 @@
 <div class="row text-center">
   <div class="col-xs-12">
 
-    <form action="/create" enctype="multipart/form-data" method="POST" style="width: 300px; margin: 0 auto">
+    <form action="/jobs/create-new/upload" enctype="multipart/form-data" method="POST" style="width: 300px; margin: 0 auto">
       <div class="form-group">
-
         <div class="input-group">
           <!-- <input type="text" name="vhmc-basename"><br /> -->
           <input class="form-control" type="file" name="vhmc-file"><br />
+
           <select class="form-control" name="vhmc-format">
             <option>mp4</option>
             <option>mp3</option>
@@ -23,7 +23,6 @@
           <br />
           <br />
           <input type="submit" class="btn btn-md btn-primary" value="Convert" >
-
       </div>
     </div>
 
