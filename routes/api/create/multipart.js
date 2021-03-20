@@ -1,16 +1,15 @@
 const Busboy = require('busboy');
-const fs = require('fs-extra');
 const os = require('os');
+const fs = require('fs');
 const inspect = require('util').inspect;
 
-const config = require('../../../lib/config');
 const jobLib = require('../../../lib/job');
-const filenameLib = require('../../../lib/filename');
+const helpers = require('../../../lib/helpers');
 
 function handlerMultipart(req, res) {
   const tmpDir = os.tmpdir();
   const destination = `${tmpDir}/vhmc/input`;
-  fs.ensureDirSync(destination);
+  helpers.ensureDirSync(destination);
   console.log('tmpDir: ', destination);
 
   const busboy = new Busboy({ headers: req.headers });
@@ -23,8 +22,8 @@ function handlerMultipart(req, res) {
 
     if (filename) {
       console.log(`Uploading ${filename}`);
-      jobData.fileBasename = filenameLib.getFileBasename(filename);
-      jobData.pathIn = `${destination}/${filename}`;
+      jobData.fileBasename = helpers.getFileBasename(filename);
+      jobData.url = `${destination}/${filename}`;
     }
 
     file.pipe(fs.createWriteStream(`${destination}/${filename}`));
@@ -41,9 +40,9 @@ function handlerMultipart(req, res) {
 
   busboy.on('finish', () => {
     const jobId = jobLib.create(jobData);
-    jobLib.start(jobId);
+    // jobLib.start(jobId);
 
-    res.json({ id: jobId, url: `${config.baseUrl}/api/v1/status/${jobId}` });
+    res.json({ id: jobId, url: `${res.locals.baseUrl}/api/v1/status/${jobId}` });
   });
 
   // Pass the stream

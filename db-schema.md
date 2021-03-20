@@ -1,13 +1,11 @@
-# MC dev notes
-
-## Insert seed data
+# DB Schema
 
 ```
 -- Drop existing tables first
 DROP TABLE IF EXISTS vhmc.public.jobs;
 DROP TABLE IF EXISTS vhmc.public.job_logs;
 DROP TABLE IF EXISTS vhmc.public.job_runs;
-
+DROP TABLE IF EXISTS vhmc.public.queue;
 
 -- Create jobs schema
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
@@ -20,9 +18,9 @@ CREATE TABLE IF NOT EXISTS vhmc.public.jobs (
     requested_outputs VARCHAR NOT NULL,
     requested_opts VARCHAR,
     callback_url VARCHAR,
-    time_created time DEFAULT now (),
-    time_started time,
-    time_finished time,
+    time_created timestamp DEFAULT now (),
+    time_started timestamp,
+    time_finished timestamp,
     assigned_job_run uuid,
     PRIMARY KEY (job_id)
 );
@@ -44,12 +42,28 @@ CREATE TABLE IF NOT EXISTS vhmc.public.job_logs (
     job_id uuid NOT NULL,
     log_data VARCHAR,
     worker_id VARCHAR,
-    time_started date,
-    time_finished date,
+    time_started timestamp,
+    time_finished timestamp,
     status VARCHAR DEFAULT 'new',
     PRIMARY KEY (job_run_id)
 );
 
+-- Create queue schema
+CREATE TABLE IF NOT EXISTS vhmc.public.queue (
+    queue_id uuid NOT NULL,
+    job_id uuid NOT NULL,
+    worker_id VARCHAR,
+    worker_last_update timestamp,
+    job_run_id uuid,
+    time_created timestamp DEFAULT now (),
+    status VARCHAR DEFAULT 'new',
+    PRIMARY KEY (queue_id)
+);
+```
+
+## Insert sample data
+
+```
 -- Insert sample job (263,343 MB)
 INSERT INTO vhmc.public.jobs (
   input_url,
@@ -78,7 +92,11 @@ INSERT INTO vhmc.public.jobs (
 ```
 
 ## Delete sample data
+
 ```
 -- Drop individual job
 DELETE FROM vhmc.public.jobs WHERE job_id='da9e5230-a65d-42e4-bc84-f4cb61268971'::uuid;
+
+-- DELETE all jobs with origin = test-suite
+DELETE FROM vhmc.public.jobs WHERE origin='test-suite';
 ```

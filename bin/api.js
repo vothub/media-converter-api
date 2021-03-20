@@ -1,30 +1,49 @@
 'use strict';
 
 const express = require('express');
+const hbs = require('hbs');
+const path = require('path');
 const config = require('../lib/config');
-const fmt = require('../lib/fmt');
-const routes = require('../routes');
+const fmt = require('../lib/helpers');
 
 function startApp () {
   const app = express();
   app.disable('x-powered-by');
 
-  // register hbs
-  const hbs = config.views.engine;
-  hbs.registerPartials(config.views.partialsPath);
+  hbs.registerPartials(path.join(__dirname, '../views/partials'));
   hbs.registerHelper('stringifyJson', fmt.stringifyJson);
   hbs.registerHelper('formatDateTimeString', fmt.formatDateTimeString);
   app.engine('hbs', hbs.__express);
   app.set('view engine', 'hbs');
 
-  routes(app);
+  app.use('/public', express.static('public'));
 
-  if (config.appNetwork === 'private' && !config.appNetworkInterface) {
-    console.log('Interface not specified - restricting to localhost');
-    config.appNetworkInterface = '127.0.0.1';
-  }
+  app.use('/', (req, res, next) => {
+    res.locals.baseUrl = config.baseUrl;
+    next();
+  });
+
+  /* eslint-disable global-require */
+  // API
+  app.post('/api/v1/create', require('../routes/api/create'));
+
+  app.get('/api/v1/status', require('../routes/api/status'));
+  app.get('/api/v1/status/:jobId', require('../routes/api/status'));
+
+  app.get('/api/v1/stream', require('../routes/api/stream'));
+  app.get('/api/v1/stream/:jobId', require('../routes/api/stream'));
+  app.get('/api/v1/stream/:jobId/:nicename', require('../routes/api/stream'));
+
+  // UI
+  app.get('/', require('../routes/pages/jobs/list'));
+  app.get('/jobs', (req, res) => res.redirect('/'));
+  app.get('/jobs/create-new', require('../routes/pages/jobs/create-new/render'));
+  app.post('/jobs/create-new/upload', require('../routes/pages/jobs/create-new/upload'));
+  app.get('/jobs/view/:jobId', require('../routes/pages/jobs/view'));
+  app.get('/api', require('../routes/pages/api'));
+
   // start app
-  app.listen(config.appPort, config.appNetworkInterface, 0, () => {
+  app.listen(config.appPort, () => {
     console.log(`[${fmt.formatDateTimeString()}] Media Converter listening on port ${config.appPort}`);
   });
 
