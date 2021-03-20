@@ -4,15 +4,15 @@ const express = require('express');
 const hbs = require('hbs');
 const path = require('path');
 const config = require('../lib/config');
-const fmt = require('../lib/helpers');
+const helpers = require('../lib/helpers');
 
 function startApp () {
   const app = express();
   app.disable('x-powered-by');
 
   hbs.registerPartials(path.join(__dirname, '../views/partials'));
-  hbs.registerHelper('stringifyJson', fmt.stringifyJson);
-  hbs.registerHelper('formatDateTimeString', fmt.formatDateTimeString);
+  hbs.registerHelper('stringifyJson', helpers.stringifyJson);
+  hbs.registerHelper('formatDateTimeString', helpers.formatDateTimeString);
   app.engine('hbs', hbs.__express);
   app.set('view engine', 'hbs');
 
@@ -44,7 +44,7 @@ function startApp () {
 
   // start app
   app.listen(config.appPort, () => {
-    console.log(`[${fmt.formatDateTimeString()}] Media Converter listening on port ${config.appPort}`);
+    console.log(`[${helpers.formatDateTimeString()}] Media Converter listening on port ${config.appPort}`);
   });
 
   return app;

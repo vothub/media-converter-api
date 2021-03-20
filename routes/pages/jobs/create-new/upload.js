@@ -2,7 +2,7 @@ const Busboy = require('busboy');
 const fs = require('fs');
 const os = require('os');
 const inspect = require('util').inspect;
-const jobLib = require('../../../../lib/job');
+const JobModel = require('../../../../models/job');
 const helpers = require('../../../../lib/helpers');
 
 function handlerMultipart(req, res) {
@@ -38,7 +38,7 @@ function handlerMultipart(req, res) {
   });
 
   busboy.on('finish', () => {
-    const jobId = jobLib.createJob(jobData);
+    const jobId = JobModel.createJob(jobData);
 
     res.redirect(`/jobs/view/${jobId}`);
   });

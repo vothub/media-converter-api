@@ -2,7 +2,7 @@ const path = require('path');
 const _ = require('lodash');
 const fs = require('fs');
 const os = require('os');
-const jobLib = require('../../lib/job');
+const JobModel = require('../../models/job');
 
 function apiDispatcherRetrieve (req, res) {
   const jobId = req.params.jobId;
@@ -12,7 +12,7 @@ function apiDispatcherRetrieve (req, res) {
     return res.send('Please specify jobId.');
   }
 
-  const job = jobLib.get(jobId);
+  const job = JobModel.get(jobId);
 
   if (!job) {
     return res.send('Invalid job');

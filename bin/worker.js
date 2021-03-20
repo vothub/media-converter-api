@@ -1,7 +1,7 @@
 const ffbinariesWrapper = require('../lib/ffbinaries');
-const fmt = require('../lib/helpers');
-const jobLib = require('../lib/job');
+const helpers = require('../lib/helpers');
 const converter = require('../lib/converter');
+const JobModel = require('../models/job');
 
 const pollingFreqRaw = process.env.POLLING_FREQUENCY_MS;
 const pollingFreqParsed = parseInt(pollingFreqRaw, 10);
@@ -35,7 +35,7 @@ function getFirstJobId(jobsArray) {
 // async fn but no callback - detached on purpose
 function checkForNewJobs() {
   console.log('Checking for new jobs...');
-  return jobLib.getAllJobs({ status: 'new' }, (jobs) => {
+  return JobModel.getAllJobs({ status: 'new' }, (jobs) => {
     if (jobs.error) {
       console.log('Error when fetching jobs!', jobs.error);
     } else if (!Array.isArray(jobs.data) || !jobs.data.length) {
@@ -56,13 +56,13 @@ function checkForNewJobs() {
  * Main function - entry point
  */
 function main() {
-  console.log(`[${fmt.formatDateTimeString()}] Ensuring ffmpeg and ffprobe binaries are present.`);
+  console.log(`[${helpers.formatDateTimeString()}] Ensuring ffmpeg and ffprobe binaries are present.`);
   ffbinariesWrapper.ensureBinaries((err) => {
     if (err) {
-      console.log(`[${fmt.formatDateTimeString()}] ffmpeg and ffprobe binaries could not be located.`);
+      console.log(`[${helpers.formatDateTimeString()}] ffmpeg and ffprobe binaries could not be located.`);
       return process.exit(1);
     }
-    console.log(`[${fmt.formatDateTimeString()}] ffmpeg and ffprobe binaries are present.`);
+    console.log(`[${helpers.formatDateTimeString()}] ffmpeg and ffprobe binaries are present.`);
     return checkForNewJobs();
   });
 }
