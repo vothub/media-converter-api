@@ -1,15 +1,14 @@
 const Busboy = require('busboy');
+const fs = require('fs');
 const os = require('os');
-const fs = require('fs-extra');
 const inspect = require('util').inspect;
-
 const jobLib = require('../../../../lib/job');
-const filenameLib = require('../../../../lib/filename');
+const helpers = require('../../../../lib/helpers');
 
 function handlerMultipart(req, res) {
   const tmpDir = os.tmpdir();
   const destination = `${tmpDir}/vhmc/input`;
-  fs.ensureDirSync(destination);
+  helpers.ensureDirSync(destination);
   console.log('tmpDir: ', destination);
 
   const busboy = new Busboy({ headers: req.headers });
@@ -22,7 +21,7 @@ function handlerMultipart(req, res) {
 
     if (filename) {
       console.log(`Uploading ${filename}`);
-      jobData.fileBasename = filenameLib.getFileBasename(filename);
+      jobData.fileBasename = helpers.getFileBasename(filename);
       jobData.pathIn = `${destination}/${filename}`;
     }
 
