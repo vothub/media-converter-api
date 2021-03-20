@@ -8,7 +8,7 @@ const helpers = require('../../../../lib/helpers');
 function handlerMultipart(req, res) {
   const tmpDir = os.tmpdir();
   const destination = `${tmpDir}/vhmc/input`;
-  helpers.ensureDirSync(destination);
+  helpers.ensureJobTmpDirExists('asdf-example-job-id');
   console.log('tmpDir: ', destination);
 
   const busboy = new Busboy({ headers: req.headers });

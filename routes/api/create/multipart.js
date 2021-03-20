@@ -9,7 +9,8 @@ const helpers = require('../../../lib/helpers');
 function handlerMultipart(req, res) {
   const tmpDir = os.tmpdir();
   const destination = `${tmpDir}/vhmc/input`;
-  helpers.ensureDirSync(destination);
+  // new job. status pending
+  helpers.ensureJobTmpDirExists('asdf-example-job-id');
   console.log('tmpDir: ', destination);
 
   const busboy = new Busboy({ headers: req.headers });
@@ -39,10 +40,11 @@ function handlerMultipart(req, res) {
   });
 
   busboy.on('finish', () => {
-    const jobId = jobLib.createJob(jobData);
-    // jobLib.start(jobId);
-
-    res.json({ id: jobId, url: `${res.locals.baseUrl}/api/v1/status/${jobId}` });
+    jobLib.createJob(jobData, (createJobErr, createJobData) => {
+      const jobId = createJobData.id;
+      // add to Queue
+      return res.json({ id: jobId, url: `${res.locals.baseUrl}/api/v1/status/${jobId}` });
+    });
   });
 
   // Pass the stream

@@ -19,9 +19,9 @@ function apiDispatcherRetrieve (req, res) {
       job.url = `${res.locals.baseUrl}/api/v1/stream/${jobId}/${nicename}`;
     }
 
-    const data = _.omit(job, ['pathIn', 'pathOut']);
+    const jobData = _.omit(job, ['pathIn', 'pathOut']);
 
-    return res.render('pages/jobs/view', { jobId, data });
+    return res.render('pages/jobs/view', { jobId, job: jobData });
   });
 }
 
