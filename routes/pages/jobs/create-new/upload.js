@@ -38,7 +38,7 @@ function handlerMultipart(req, res) {
   });
 
   busboy.on('finish', () => {
-    const jobId = jobLib.create(jobData);
+    const jobId = jobLib.createJob(jobData);
 
     res.redirect(`/jobs/view/${jobId}`);
   });

@@ -1,6 +1,7 @@
 const ffbinariesWrapper = require('../lib/ffbinaries');
 const fmt = require('../lib/helpers');
 const jobLib = require('../lib/job');
+const converter = require('../lib/converter');
 
 const pollingFreqRaw = process.env.POLLING_FREQUENCY_MS;
 const pollingFreqParsed = parseInt(pollingFreqRaw, 10);
@@ -10,13 +11,15 @@ const POLLING_FREQUENCY_MS = pollingFreq;
 
 function processJob(jobId) {
   console.log(`Processing job ${jobId}`);
-  return jobLib.start(jobId, () => {
+  return converter.start(jobId, () => {
+    console.log(`Finished processing job ${jobId}`);
     // once finished look for a new job
     return checkForNewJobs();
   });
 }
 
 // claim first unassigned job
+// needs to be a transaction with a lock on the queue table
 function getFirstJobId(jobsArray) {
   if (!Array.isArray(jobsArray) || !jobsArray.length) {
     return null;
