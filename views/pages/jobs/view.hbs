@@ -32,11 +32,11 @@
         <td>{{job.data.input_url}}</td>
       </tr>
       <tr>
-        <td>Output:</td>
+        <td>Requested outputs:</td>
         <td>{{job.data.requested_outputs}}</td>
       </tr>
       <tr>
-        <td>State:</td>
+        <td>Job status:</td>
         <td>{{job.data.status}}</td>
       </tr>
     </table>
@@ -45,7 +45,7 @@
       <p><a href="{{job.data.url}}" class="btn btn-md btn-primary">Download</a></p>
     {{else}}
       <p>Progress: {{#if job.data.progress}}{{job.data.progress}}{{else}}0{{/if}}%</p>
-      <meta http-equiv="refresh" content="3">
+      <meta http-equiv="refresh" content="5">
     {{/if}}
 
     <pre>{{stringifyJson job}}</pre>

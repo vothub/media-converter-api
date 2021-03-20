@@ -1,7 +1,7 @@
-const jobLib = require('../../../lib/job');
+const JobModel = require('../../../models/job');
 
 function renderJobsPage(req, res) {
-  return jobLib.getAllJobs({}, (jobs) => {
+  return JobModel.getAllJobs({}, (jobs) => {
     if (jobs.error) {
       return res.render('pages/error', { error: 'Error while fetching jobs.' });
     }

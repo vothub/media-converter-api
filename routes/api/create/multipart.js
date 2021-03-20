@@ -3,7 +3,7 @@ const os = require('os');
 const fs = require('fs');
 const inspect = require('util').inspect;
 
-const jobLib = require('../../../lib/job');
+const JobModel = require('../../../models/job');
 const helpers = require('../../../lib/helpers');
 
 function handlerMultipart(req, res) {
@@ -40,7 +40,7 @@ function handlerMultipart(req, res) {
   });
 
   busboy.on('finish', () => {
-    jobLib.createJob(jobData, (createJobErr, createJobData) => {
+    JobModel.createJob(jobData, (createJobErr, createJobData) => {
       const jobId = createJobData.id;
       // add to Queue
       return res.json({ id: jobId, url: `${res.locals.baseUrl}/api/v1/status/${jobId}` });

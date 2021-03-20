@@ -1,6 +1,5 @@
 const _ = require('lodash');
-const jobLib = require('../../../lib/job');
-// const config = require('../../../lib/config');
+const JobModel = require('../../../models/job');
 
 function apiDispatcherRetrieve (req, res) {
   const jobId = req.params.jobId;
@@ -9,7 +8,7 @@ function apiDispatcherRetrieve (req, res) {
     return res.render('pages/error', { error: 'Please specify jobId.' });
   }
 
-  return jobLib.getJobById(jobId, (job) => {
+  return JobModel.getJobById(jobId, (job) => {
     if (!job || typeof job !== 'object') {
       return res.render('pages/error', { error: 'Job not found.' });
     }

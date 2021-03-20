@@ -1,11 +1,11 @@
 const _ = require('lodash');
-const jobLib = require('../../lib/job');
+const JobModel = require('../../models/job');
 const config = require('../../lib/config');
 
 function apiDispatcherRetrieve (req, res) {
   const jobId = req.params.jobId;
   // const contentType = req.headers['content-type'] || '';
-  const job = jobLib.get(jobId);
+  const job = JobModel.get(jobId);
 
   if (!jobId) {
     return res.send('Please specify jobId.');
