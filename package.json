@@ -10,8 +10,8 @@
   "scripts": {
     "start": "concurrently \"npm run start:api\" \"npm run start:worker\"",
     "dev": "concurrently \"npm run dev:api\" \"npm run dev:worker\"",
-    "start:api": "node ./bin/api.js",
-    "start:worker": "node ./bin/worker.js",
+    "start:api": "node -r dotenv/config ./bin/api.js",
+    "start:worker": "node -r dotenv/config ./bin/worker.js",
     "dev:api": "npx nodemon -r dotenv/config ./bin/api.js",
     "dev:worker": "npx nodemon -r dotenv/config ./bin/worker.js",
     "lint": "eslint .",
@@ -22,6 +22,8 @@
   "license": "MIT",
   "dependencies": {
     "async": "^2.4.1",
+    "axios": "^0.21.1",
+    "body-parser": "^1.19.0",
     "busboy": "^0.2.14",
     "concurrently": "^6.0.0",
     "debug": "^4.1.1",

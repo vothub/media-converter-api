@@ -12,7 +12,7 @@
 
   <br /><br />
 
-  <form action="/jobs/create-new/upload" enctype="multipart/form-data" method="POST" style="margin: 0 auto">
+  <form action="/api/v1/create" enctype="multipart/form-data" method="POST" style="margin: 0 auto">
     <!-- STEP 1 -->
     <div class="row text-center">
       <h3 class="text">Source file</h3>
@@ -51,7 +51,7 @@
           {{#each presets}}
           <div class="input-group">
             <label>
-              <input type="radio" name="vhmc-output-preset" value="{{this.value}}" />
+              <input type="radio" name="vhmc-preset" value="{{this.value}}" />
               {{this.name}}
               <br />
               <small>{{this.description}}</small>
@@ -67,13 +67,13 @@
           <div class="input-group">
             <label>
               Owner
-              <input type="text" name="vhmc-input-owner" value="" />
+              <input type="text" name="vhmc-owner" value="" />
             </label>
           </div>
           <div class="input-group">
             <label>
               Origin
-              <input type="text" name="vhmc-input-origin" value="" />
+              <input type="text" name="vhmc-origin" value="" />
             </label>
           </div>
         </div>

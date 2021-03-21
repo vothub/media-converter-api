@@ -38,7 +38,6 @@ function startApp () {
   app.get('/', require('../routes/pages/jobs/queue'));
   app.get('/jobs', (req, res) => res.redirect('/'));
   app.get('/jobs/create-new', require('../routes/pages/jobs/create-new/render'));
-  app.post('/jobs/create-new/upload', require('../routes/pages/jobs/create-new/upload'));
   app.get('/jobs/view/:jobId', require('../routes/pages/jobs/view'));
   app.get('/api', require('../routes/pages/api'));
   app.get('/about', require('../routes/pages/about'));
