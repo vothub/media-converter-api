@@ -15,16 +15,14 @@
   <form action="/jobs/create-new/upload" enctype="multipart/form-data" method="POST" style="margin: 0 auto">
     <!-- STEP 1 -->
     <div class="row text-center">
-      <h3 class="text">Step 1</h3>
+      <h3 class="text">Source file</h3>
       <div class="col-xs-4 col-xs-offset-1">
-        <p>Create a job by direct upload</p>
+        <p>Provide source by direct file upload</p>
         <small>Max upload size: 50MB</small>
         <br />
         <br />
         <div class="form-group">
-          <!-- <div class="input-group"> -->
-            <input class="form-control" type="file" name="vhmc-input-file"><br />
-          <!-- </div> -->
+          <input class="form-control" type="file" name="vhmc-input-file" />
         </div>
       </div>
 
@@ -33,25 +31,23 @@
       </div>
 
       <div class="col-xs-4 col-xs-offset-2x">
-
-        <p>Create a job from a remote URL</p>
+        <p>Provide source file as a URL</p>
         <br />
         <br />
         <div class="form-group">
-          <!-- <div class="input-group"> -->
-            <input class="form-control" type="input" name="vhmc-input-url" placeholder="Paste the media URL here" ><br />
-          <!-- </div> -->
+          <input class="form-control" type="input" name="vhmc-input-url" placeholder="Paste the source URL here" />
         </div>
 
       </div>
     </div>
 
+    <br /><br />
+
     <!-- STEP 2 -->
     <div class="row text-center">
-      <h3 class="text">Step 2</h3>
-      <div class="col-xs-4 col-xs-offset-4">
+      <div class="col-xs-4 col-xs-offset-2">
+        <h3 class="text">Preset</h3>
         <div class="form-group">
-          <strong>Preset</strong>
           {{#each presets}}
           <div class="input-group">
             <label>
@@ -62,17 +58,12 @@
             </label>
           </div>
           {{/each}}
-
-          </div>
         </div>
       </div>
 
-    <!-- STEP 3 -->
-    <div class="row text-center">
-      <h3 class="text">Step 3</h3>
-      <div class="col-xs-4 col-xs-offset-4">
+      <div class="col-xs-4">
+        <h3 class="text">Optional metadata</h3>
         <div class="form-group">
-          <strong>Optional metadata</strong>
           <div class="input-group">
             <label>
               Owner
@@ -85,17 +76,17 @@
               <input type="text" name="vhmc-input-origin" value="" />
             </label>
           </div>
-
-          </div>
         </div>
-      </div>
 
-      <div class="row text-right">
-        <div class="col-xs-4 col-xs-offset-4">
-          <button type="submit" class="btn btn-sm btn-primary">Create</button>
+        <br /><br/>
+        <br /><br/>
+
+        <div class="form-group text-center">
+          <button type="submit" class="btn btn-md btn-primary">Create</button>
         </div>
-      </div>
 
+      </div>
     </div>
+
   </form>
 </div>

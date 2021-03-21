@@ -1,7 +1,6 @@
-const presets = require('../../../../models/job').AVAILABLE_PRESETS;
+const presets = require('../../../../models/presets');
 
 module.exports = (req, res) => {
-  res.locals.pageTitle = 'Convert a file - Media Converter';
-
+  res.locals.pageTitle = 'Create a new job - Media Converter';
   res.render('pages/jobs/create-new', { presets });
 };

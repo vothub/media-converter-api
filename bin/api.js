@@ -35,7 +35,7 @@ function startApp () {
   app.get('/api/v1/stream/:jobId/:nicename', require('../routes/api/stream'));
 
   // UI
-  app.get('/', require('../routes/pages/jobs/list'));
+  app.get('/', require('../routes/pages/jobs/queue'));
   app.get('/jobs', (req, res) => res.redirect('/'));
   app.get('/jobs/create-new', require('../routes/pages/jobs/create-new/render'));
   app.post('/jobs/create-new/upload', require('../routes/pages/jobs/create-new/upload'));

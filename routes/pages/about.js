@@ -1,5 +1,6 @@
-function apiInfoPage (req, res) {
+function renderAboutPage(req, res) {
+  res.locals.pageTitle = 'About Media Converter';
   return res.render('pages/about');
 }
 
-module.exports = apiInfoPage;
+module.exports = renderAboutPage;
