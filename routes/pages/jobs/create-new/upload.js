@@ -5,12 +5,18 @@ const inspect = require('util').inspect;
 const JobModel = require('../../../../models/job');
 const helpers = require('../../../../lib/helpers');
 
+/**
+ * The multipart implementation to handle file uploads
+ * This will only work when API and Worker threads are running
+ * on the same filesystem - just stores file in tmp dir for now 
+ */
 function handlerMultipart(req, res) {
   const tmpDir = os.tmpdir();
   const destination = `${tmpDir}/vhmc/input`;
-  helpers.ensureJobTmpDirExists('asdf-example-job-id');
   console.log('tmpDir: ', destination);
 
+  // first create a job!
+  helpers.ensureJobTmpDirExists('asdf-example-job-id');
   const busboy = new Busboy({ headers: req.headers });
   const jobData = {
     format: 'mp4'

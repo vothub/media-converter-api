@@ -3,7 +3,7 @@ const JobModel = require('../../../models/job');
 
 function apiDispatcherRetrieve (req, res) {
   const jobId = req.params.jobId;
-
+  const autorefresh = req.query.autorefresh === 'true';
   if (!jobId) {
     return res.render('pages/error', { error: 'Please specify jobId.' });
   }
@@ -20,7 +20,7 @@ function apiDispatcherRetrieve (req, res) {
 
     const jobData = _.omit(job, ['pathIn', 'pathOut']);
 
-    return res.render('pages/jobs/view', { jobId, job: jobData });
+    return res.render('pages/jobs/view', { jobId, job: jobData, autorefresh });
   });
 }
 

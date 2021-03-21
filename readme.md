@@ -33,9 +33,23 @@ with a single worker thread and a single server thread.
 
 ## Configuration
 
-- `PORT`
-- `BASE_URL`
-- `NETWORK`
+Media Converter is configured by environment variables.
+
+You can use a `.env` file to set the necessary values.
+
+**Database (both processes)**
+- `POSTGRES_HOST` (defaults to `localhost`)
+- `POSTGRES_PORT` (defaults to `5432`)
+- `POSTGRES_USER` (defaults to empty string)
+- `POSTGRES_PASS` (defaults to empty string)
+- `POSTGRES_DBNAME` (defaults to `vhmc`)
+
+**API**
+- `APP_PORT` (defaults to `3000`)
+- `APP_BASE_URL` (defaults to `localhost:3000`)
+
+**Worker**
+- `POLLING_FREQUENCY_MS` (defaults to `3000`)
 
 
 ## TODO
