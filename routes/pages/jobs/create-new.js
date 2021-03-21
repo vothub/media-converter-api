@@ -1,4 +1,4 @@
-const presets = require('../../../../models/presets');
+const presets = require('../../../models/presets');
 
 module.exports = (req, res) => {
   res.locals.pageTitle = 'Create a new job - Media Converter';

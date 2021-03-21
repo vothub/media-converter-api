@@ -31,7 +31,7 @@ function createJob(data, callback) {
   }
   // data.filenamePatern = data.filenamePatern || '$base.$format';
 
-  const insertQuery = `INSERT INTO vhmc.public.jobs (
+  const insertQuery = `INSERT INTO public.jobs (
     input_url,
     preset,
     origin,
@@ -39,8 +39,8 @@ function createJob(data, callback) {
   ) VALUES (
     '${data.input_url}',
     '${data.preset}',
-    ${data.origin ? `${data.origin}` : `'test-suite'`},
-    ${data.owner ? `${data.owner}` : `'vhmc'`}
+    ${data.origin ? `${data.origin}` : "'test-suite'"},
+    ${data.owner ? `${data.owner}` : "'vhmc'"}
   ) RETURNING job_id;`;
 
   return pg.execQuery(insertQuery, (insertJobResponse) => {
@@ -66,10 +66,53 @@ function createJob(data, callback) {
 
 /**
  * Update job record
- * Requires id
+ * @param jobId
+ * @param data.status
+ * @param data.time_started
+ * @param data.time_finished
+ * @param callback
  */
-function updateJob(data, callback) {
-  // todo
+function updateJob(jobId, data, callback) {
+  if (typeof jobId !== 'string' || !jobId.length) {
+    return callback('jobId is required');
+  }
+  if (typeof data !== 'object' || (!data.status && !data.time_started && !data.time_finished)) {
+    return callback(`No update-able data provided. Provided: ${JSON.stringify(data)}`);
+  }
+
+  const updatedFields = [];
+  if (data.status) {
+    updatedFields.push(`status = '${data.status}'`);
+  }
+  if (data.time_started) {
+    updatedFields.push(`time_started = '${new Date(data.time_started).toISOString()}'::timestamp`);
+  }
+  if (data.time_finished) {
+    updatedFields.push(`time_finished = '${new Date(data.time_finished).toISOString()}'::timestamp`);
+  }
+
+  let updateQuery = 'UPDATE public.jobs';
+  updateQuery += ` SET ${updatedFields.join(', ')}`;
+  updateQuery += ` WHERE job_id='${jobId}'::uuid;`;
+
+  return pg.execQuery(updateQuery, (updateJobResponse) => {
+    if (!updateJobResponse || updateJobResponse.error) {
+      return callback(updateJobResponse || { error: 'Couldnt insert the job into DB' });
+    }
+
+    if (!updateJobResponse.data || !Array.isArray(updateJobResponse.data) || !updateJobResponse.data.length) {
+      return callback({ error: 'Job ID not returned. Job missing maybe?' });
+    }
+
+    console.log('UPDATED JOB', jobId);
+
+    const response = {
+      error: null,
+      total: updateJobResponse.total,
+      data: jobId
+    };
+    return callback(response);
+  });
 }
 
 function getAllJobs(opts, callback) {
@@ -107,6 +150,7 @@ function getJobById(jobId, callback) {
 const JobModel = {
   AVAILABLE_PRESETS,
   createJob,
+  updateJob,
   getAllJobs,
   getJobById,
 };
