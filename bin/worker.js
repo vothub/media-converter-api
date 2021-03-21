@@ -36,16 +36,16 @@ function getFirstJobId(jobsArray) {
 
 // async fn but no callback - detached on purpose
 function checkForNewJobs() {
-  console.log('Checking for new jobs...');
+  console.log(`[${helpers.formatDateTimeString()}] Checking for new jobs...`);
   return JobModel.getAllJobs({ status: 'new' }, (jobs) => {
     if (jobs.error) {
-      console.log('Error when fetching jobs!', jobs.error);
+      console.log(`[${helpers.formatDateTimeString()}] Error when fetching jobs! ${jobs.error}`);
     } else if (!Array.isArray(jobs.data) || !jobs.data.length) {
-      console.log('No new jobs found');
+      console.log(`[${helpers.formatDateTimeString()}] No new jobs found`);
     }
     const firstJobId = getFirstJobId(jobs.data);
     if (firstJobId) {
-      console.log(`First available job: ${firstJobId}`);
+      console.log(`[${helpers.formatDateTimeString()}] First available job: ${firstJobId}`);
       return processJob(firstJobId);
     }
 
