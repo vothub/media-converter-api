@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS vhmc.public.jobs (
     input_url VARCHAR NOT NULL,
     origin VARCHAR NOT NULL,
     owner VARCHAR NOT NULL,
-    requested_outputs VARCHAR NOT NULL,
+    preset VARCHAR NOT NULL,
     requested_opts VARCHAR,
     callback_url VARCHAR,
     time_created timestamp DEFAULT now (),
@@ -69,7 +69,7 @@ INSERT INTO vhmc.public.jobs (
   input_url,
   origin,
   owner,
-  requested_outputs
+  preset
 ) VALUES (
     'https://download.blender.org/demo/movies/BBB/bbb_sunflower_1080p_30fps_normal.mp4',
     'test-suite',
@@ -82,7 +82,7 @@ INSERT INTO vhmc.public.jobs (
   input_url,
   origin,
   owner,
-  requested_outputs
+  preset
 ) VALUES (
     'https://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4',
     'test-suite',

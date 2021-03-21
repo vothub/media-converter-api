@@ -1,6 +1,8 @@
 const pg = require('../lib/postgres');
 const AVAILABLE_PRESETS = require('./presets');
 
+const availablePresetsArray = AVAILABLE_PRESETS.map((preset) => preset.value);
+
 // very meh - replace with something decent
 function sanitiseSQLString(input) {
   return input.replace(';', '').replace('\'', '').replace('"', '').replace('\\', '');
@@ -12,53 +14,54 @@ function sanitiseSQLString(input) {
  * @returns job id
  *
  * data = {
- *   pathIn: '/tmp/file/path',
- *   format: 'mp4',
- *   fileBasename: 'MyImportantPresentation',
- *   filenamePatern: '$base.$format'
+ *   input_url: '/tmp/file/path',
+ *   preset: 'mp4',
+ *   owner: 'vhmc',
+ *   origin: 'test-suite'
  * }
  */
 function createJob(data, callback) {
-  if (typeof data !== 'object' || !data.pathIn || !data.format) {
+  if (typeof data !== 'object' || !data.input_url || !data.preset) {
     console.log('Missing arguments when creating a job. Provided:', data);
     return null;
   }
-  const mappedPresets = AVAILABLE_PRESETS.map((preset) => preset.value);
-  if (mappedPresets.indexOf(data.format) === -1) {
-    console.log('Unsupported output format. Provided:', data.format);
+  if (availablePresetsArray.indexOf(data.preset) === -1) {
+    console.log('Unsupported output format. Provided:', data.preset);
     return null;
   }
-  data.filenamePatern = data.filenamePatern || '$base.$format';
+  // data.filenamePatern = data.filenamePatern || '$base.$format';
 
-  // data.pathOut = `${destination}/${generateOutputFilename(data)}`;
-  // TODO insert data to mongo instead
-  // jobs[data.id] = data;
-  // return data.id;
+  const insertQuery = `INSERT INTO vhmc.public.jobs (
+    input_url,
+    preset,
+    origin,
+    owner
+  ) VALUES (
+    '${data.input_url}',
+    '${data.preset}',
+    ${data.origin ? `${data.origin}` : `'test-suite'`},
+    ${data.owner ? `${data.owner}` : `'vhmc'`}
+  ) RETURNING job_id;`;
 
-  // insert to DB here!!
-  return callback(null, data.id);
+  return pg.execQuery(insertQuery, (insertJobResponse) => {
+    if (!insertJobResponse || insertJobResponse.error) {
+      return callback(insertJobResponse || { error: 'Couldnt insert the job into DB' });
+    }
 
-//   const insertQuery = `INSERT INTO vhmc.public.jobs (
-//     input_url,
-//     origin,
-//     owner,
-//     requested_outputs
-//   ) VALUES (
-//       'https://download.blender.org/demo/movies/BBB/bbb_sunflower_1080p_30fps_normal.mp4',
-//       'test-suite',
-//       'vot-hq',
-//       'ogv'
-//   );`
-//
-//     const job = res.rows[0];
-//
-//     const response = {
-//       error: null,
-//       total: res.rowCount,
-//       data: job,
-//     };
-//     return callback(response);
-//   });
+    if (!insertJobResponse.data || !Array.isArray(insertJobResponse.data) || !insertJobResponse.data.length) {
+      return callback({ error: 'Job ID not returned. Job missing maybe?' });
+    }
+
+    const jobId = insertJobResponse.data[0].job_id;
+    console.log('INSERTED JOB', jobId);
+
+    const response = {
+      error: null,
+      total: insertJobResponse.total,
+      data: jobId
+    };
+    return callback(response);
+  });
 }
 
 /**

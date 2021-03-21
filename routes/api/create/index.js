@@ -1,18 +1,17 @@
-// const handlerJson = require('./json');
-const handlerMultipart = require('./multipart');
+const handleJson = require('./handleJson');
+const handleMultipart = require('./handleMultipart');
 
 function apiDispatcherConvert(req, res) {
   const contentType = req.headers['content-type'] || '';
-  // console.log('contentType', contentType);
 
-  // any method - json data
-  // if (contentType.indexOf('application/json') !== -1) {
-  //   return handlerJson(req, res);
-  // }
+  // json data
+  if (contentType.startsWith('application/json')) {
+    return handleJson(req, res);
+  }
 
-  // any method - form data
-  if (contentType.indexOf('multipart/form-data') !== -1) {
-    return handlerMultipart(req, res);
+  // multipart data
+  if (contentType.startsWith('multipart/form-data')) {
+    return handleMultipart(req, res);
   }
 
   // other methods throw error

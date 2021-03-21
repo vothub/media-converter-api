@@ -54,14 +54,15 @@ You can use a `.env` file to set the necessary values.
 
 ## TODO
 
-- Add database for persistence
-- Support for S3 Signed URLs
-- Logging via debug module
-- Documentation - job schema, statuses, data flow, presets
-- Less synchronous :)
+- Retry logic
+- Add persistent backing storage (scaling restriction)
+- Improve documentation - schemas, statuses, data flow, presets, etc.
 
 <!--
-- Queue monitoring
+- Logging via debug module
+- Support for S3 Signed URLs
+- Less synchronous :)
+- Queue monitoring + manipulation
 - Auth
 - Documentation - deployments, multiple nodes
 - Add web hooks / callback URLs for notifications
