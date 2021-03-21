@@ -11,6 +11,8 @@ function startApp () {
   app.disable('x-powered-by');
 
   hbs.registerPartials(path.join(__dirname, '../views/partials'));
+  hbs.registerHelper('eq', helpers.eq);
+  hbs.registerHelper('ne', helpers.ne);
   hbs.registerHelper('stringifyJson', helpers.stringifyJson);
   hbs.registerHelper('formatDateTimeString', helpers.formatDateTimeString);
   app.engine('hbs', hbs.__express);

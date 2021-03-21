@@ -21,7 +21,6 @@ CREATE TABLE IF NOT EXISTS vhmc.public.jobs (
     time_created timestamp DEFAULT now (),
     time_started timestamp,
     time_finished timestamp,
-    assigned_job_run uuid,
     PRIMARY KEY (job_id)
 );
 
