@@ -1,30 +1,46 @@
 {
-  "name": "great-converto",
-  "version": "0.1.0",
+  "name": "@vothub/media-converter-api",
+  "version": "0.2.0",
   "description": "File conversion HTTP service.",
-  "main": "index.js",
+  "main": "bin/api.js",
+  "bin": {
+    "vhmc": "bin/api.js",
+    "vhmc-worker": "bin/worker.js"
+  },
   "scripts": {
-    "start": "node index.js",
-    "lint": "./node_modules/.bin/eslint ."
+    "start": "concurrently \"npm run start:api\" \"npm run start:worker\"",
+    "dev": "concurrently \"npm run dev:api\" \"npm run dev:worker\"",
+    "start:api": "node -r dotenv/config ./bin/api.js",
+    "start:worker": "node -r dotenv/config ./bin/worker.js",
+    "dev:api": "npx nodemon -r dotenv/config ./bin/api.js",
+    "dev:worker": "npx nodemon -r dotenv/config ./bin/worker.js",
+    "lint": "eslint .",
+    "test": "mocha **/*.spec.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Vot",
   "license": "MIT",
   "dependencies": {
     "async": "^2.4.1",
+    "axios": "^0.21.1",
+    "body-parser": "^1.19.0",
     "busboy": "^0.2.14",
-    "clarg": "0.0.4",
+    "concurrently": "^6.0.0",
+    "debug": "^4.1.1",
+    "dotenv": "^8.1.0",
     "express": "^4.15.3",
     "ffbinaries": "^1.0.2",
     "fluent-ffmpeg": "^2.1.2",
-    "fs-extra": "^5.0.0",
     "hbs": "^4.0.1",
     "lodash": "^4.17.4",
-    "mongodb": "^2.2.29",
-    "request": "^2.81.0",
+    "pg": "^8.5.1",
     "uuid": "^3.2.1"
   },
   "devDependencies": {
-    "eslint": "^4.9.0"
+    "chai": "^4.2.0",
+    "eslint": "6.2.2",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "mocha": "^6.2.0"
   }
 }

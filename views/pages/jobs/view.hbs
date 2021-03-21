@@ -1,0 +1,73 @@
+{{#if autorefresh}}
+<meta http-equiv="refresh" content="5">
+{{/if}}
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-10 col-sm-offset-1 text-left">
+      <h2>Inspect job</h2>
+      <p>Time in queue: 17s | Place in queue: 3 | Execution time: 62s | Attempted runs: 1</p>
+
+      <br /><br />
+
+      {{#if (ne job.data.status 'success')}}
+        {{#if autorefresh}}
+          <a href="?" class="btn btn-sm btn-default">Autorefresh off</a>
+        {{else}}
+          <a href="?autorefresh=true" class="btn btn-sm btn-default">Autorefresh on</a>
+        {{/if}}
+      {{/if}}
+
+      {{#if (eq job.data.status 'new')}}
+      <!-- job not started yet -->
+      <a href="#" class="btn btn-sm btn-primary">Move to the top of the queue</a>
+      {{/if}}
+
+      {{#if (eq job.data.status 'started')}}
+        <!-- job in progress -->
+        <a href="#" class="btn btn-sm btn-danger">Cancel</a>
+      {{/if}}
+
+      {{#if (eq job.data.status 'error')}}
+        <!-- job in progress -->
+        <a href="#" class="btn btn-sm btn-danger">Cancel</a>
+        <!-- job failed 3 times -->
+        <a href="#" class="btn btn-sm btn-primary">Re-run</a>
+        <a href="#" class="btn btn-sm btn-danger">Cancel</a>
+      {{/if}}
+
+      {{#if (eq job.data.status 'success')}}
+        <!-- job in progress -->
+        <a href="/api/v1/stream/{{job.data.job_id}}/output.{{job.data.preset}}" class="btn btn-sm btn-success">Save</a>
+      {{/if}}
+
+    </div>
+  </div>
+
+  <br /><br />
+
+  <div class="row">
+    <div class="col-sm-10 col-sm-offset-1">
+      <table class="table">
+        <tr>
+          <td>Job ID:</td>
+          <td><code>{{job.data.job_id}}</code></td>
+        </tr>
+        <tr>
+          <td>Input:</td>
+          <td>{{job.data.input_url}}</td>
+        </tr>
+        <tr>
+          <td>Requested outputs:</td>
+          <td>{{job.data.preset}}</td>
+        </tr>
+        <tr>
+          <td>Job status:</td>
+          <td>{{job.data.status}}</td>
+        </tr>
+      </table>
+
+      <pre>{{stringifyJson job}}</pre>
+    </div>
+  </div>
+</div>

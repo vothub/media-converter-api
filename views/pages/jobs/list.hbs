@@ -1,0 +1,39 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-10 col-sm-offset-1">
+      <h2>Queue</h2>
+      <p>Total jobs: {{jobs.total}} | Jobs in queue: {{jobs.total}}</p>
+    </div>
+  </div>
+
+  <br /><br />
+
+  <div class="row">
+    <div class="col-sm-10 col-sm-offset-1">
+      <table class="table table-hover">
+        <tr>
+          <th width="40">Status</th>
+          <th width="160">Time created</th>
+          <th width="300">Job ID</th>
+          <th>Outputs</th>
+          <th>Origin</th>
+          <th>Owner</th>
+          <th width="80">-</th>
+        </tr>
+      {{#each jobs.data}}
+        <tr>
+          <td><span class="badge badge-warning">{{this.status}}</span></td>
+          <td>{{formatDateTimeString this.time_created}}</td>
+          <td><code>{{this.job_id}}</code></td>
+          <td>{{this.preset}}</td>
+          <td>{{this.origin}}</td>
+          <td>{{this.owner}}</td>
+          <td>
+            <a href="/jobs/view/{{this.job_id}}" class="btn btn-sm xbtn-default">Inspect</a>
+          </td>
+        </tr>
+      {{/each}}
+      </table>
+    </div>
+  </div>
+</div>

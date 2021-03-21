@@ -1,0 +1,92 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-10 col-sm-6 col-sm-offset-1 text-left">
+      <h2>Create a new job</h2>
+      <p>Define a new job by providing a URL to the source file or by direct upload.</p>
+    </div>
+
+    <div class="col-xs-4 col-sm-2 text-right">
+      <!-- <a href="#" class="btn btn-sm btn-primary">Next step &rsaquo;</a> -->
+    </div>
+  </div>
+
+  <br /><br />
+
+  <form action="/api/v1/create" enctype="multipart/form-data" method="POST" style="margin: 0 auto">
+    <!-- STEP 1 -->
+    <div class="row text-center">
+      <h3 class="text">Source file</h3>
+      <!-- <div class="col-xs-4 col-xs-offset-1">
+        <p>Provide source by direct file upload</p>
+        <small>Max upload size: 50MB</small>
+        <br />
+        <br />
+        <div class="form-group">
+          <input class="form-control" type="file" name="vhmc-input-file" />
+        </div>
+      </div> -->
+
+      <!-- <div class="col-xs-2">
+      <p>OR</p>
+      </div> -->
+
+      <div class="col-xs-4 col-xs-offset-4">
+        <p>Provide source file as a URL</p>
+        <br />
+        <br />
+        <div class="form-group">
+          <input class="form-control" type="input" name="vhmc-input-url" placeholder="Paste the source URL here" />
+        </div>
+
+      </div>
+    </div>
+
+    <br /><br />
+
+    <!-- STEP 2 -->
+    <div class="row text-center">
+      <div class="col-xs-4 col-xs-offset-2">
+        <h3 class="text">Preset</h3>
+        <div class="form-group">
+          {{#each presets}}
+          <div class="input-group">
+            <label>
+              <input type="radio" name="vhmc-preset" value="{{this.value}}" />
+              {{this.name}}
+              <br />
+              <small>{{this.description}}</small>
+            </label>
+          </div>
+          {{/each}}
+        </div>
+      </div>
+
+      <div class="col-xs-4">
+        <h3 class="text">Optional metadata</h3>
+        <div class="form-group">
+          <div class="input-group">
+            <label>
+              Owner
+              <input type="text" name="vhmc-owner" value="" />
+            </label>
+          </div>
+          <div class="input-group">
+            <label>
+              Origin
+              <input type="text" name="vhmc-origin" value="" />
+            </label>
+          </div>
+        </div>
+
+        <br /><br/>
+        <br /><br/>
+
+        <div class="form-group text-center">
+          <button type="submit" class="btn btn-md btn-primary">Create</button>
+        </div>
+
+      </div>
+    </div>
+
+  </form>
+</div>
