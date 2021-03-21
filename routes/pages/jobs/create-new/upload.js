@@ -8,7 +8,7 @@ const helpers = require('../../../../lib/helpers');
 /**
  * The multipart implementation to handle file uploads
  * This will only work when API and Worker threads are running
- * on the same filesystem - just stores file in tmp dir for now 
+ * on the same filesystem - just stores file in tmp dir for now
  */
 function handlerMultipart(req, res) {
   const tmpDir = os.tmpdir();

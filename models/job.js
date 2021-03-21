@@ -1,22 +1,10 @@
 const pg = require('../lib/postgres');
+const AVAILABLE_PRESETS = require('./presets');
 
 // very meh - replace with something decent
 function sanitiseSQLString(input) {
   return input.replace(';', '').replace('\'', '').replace('"', '').replace('\\', '');
 }
-
-const AVAILABLE_PRESETS = [
-  { value: 'mp4-h264:1080p', ext: 'mp4', name: 'MP4 - H264 @ 1080p', description: '' },
-  { value: 'mp4-h264:1080p;screenshots', ext: 'mp4', name: 'MP4 - H264 @ 1080p + screenshots', description: '' },
-  { value: 'mp4-h265:1080p', ext: 'mp4', name: 'MP4 - H265 @ 1080p', description: '' },
-  { value: 'mp4-h265:1080p;screenshots', ext: 'mp4', name: 'MP4 - H265 @ 1080p + screenshots', description: '' },
-  { value: 'ogv:1080p', ext: 'ogv', name: 'OGV @ 1080p', description: '' },
-  { value: 'ogv:1080p;screenshots', ext: 'ogv', name: 'OGV @ 1080p + screenshots', description: '' },
-  { value: 'webm:1080p', ext: 'webm', name: 'WEBM @ 1080p', description: '' },
-  { value: 'mp3:192', ext: 'mp3', name: 'MP3 @ 192kbps', description: '' },
-  { value: 'ogg', ext: 'ogg', name: 'OGG', description: '' },
-  { value: 'gif', ext: 'gif', name: 'GIF', description: '' },
-];
 
 /**
  * Create a job
@@ -49,10 +37,7 @@ function createJob(data, callback) {
 
   // insert to DB here!!
   return callback(null, data.id);
-}
 
-// function createJob(jobData, callback) {
-//   // connect();
 //   const insertQuery = `INSERT INTO vhmc.public.jobs (
 //     input_url,
 //     origin,
@@ -64,19 +49,6 @@ function createJob(data, callback) {
 //       'vot-hq',
 //       'ogv'
 //   );`
-//   // check if jobId is a valid uuid
-//   client.query(insertQuery, (err, res) => {
-//   // client.query(`INSERT * FROM public.jobs WHERE job_id = '${jobId}'::uuid`, (err, res) => {
-//     // disconnect();
-//
-//     if (err) {
-//       // log the error
-//       return callback({ error: err });
-//     }
-//
-//     if (!res || !Array.isArray(res.rows) || !res.rows.length) {
-//       return callback({ error: 'Job not found' });
-//     }
 //
 //     const job = res.rows[0];
 //
@@ -87,7 +59,7 @@ function createJob(data, callback) {
 //     };
 //     return callback(response);
 //   });
-// }
+}
 
 /**
  * Update job record
@@ -102,7 +74,7 @@ function getAllJobs(opts, callback) {
   if (opts && typeof opts.status === 'string') {
     query += ` WHERE status='${sanitiseSQLString(opts.status.toLowerCase().trim())}'`;
   }
-  console.log('query:', query);
+  // console.log('query:', query);
   return pg.execQuery(query, callback);
 }
 

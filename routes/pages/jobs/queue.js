@@ -1,6 +1,8 @@
 const JobModel = require('../../../models/job');
 
-function renderJobsPage(req, res) {
+function renderQueuePage(req, res) {
+  res.locals.pageTitle = 'Queue - Media Converter';
+
   return JobModel.getAllJobs({}, (jobs) => {
     if (jobs.error) {
       return res.render('pages/error', { error: 'Error while fetching jobs.' });
@@ -9,4 +11,4 @@ function renderJobsPage(req, res) {
   });
 }
 
-module.exports = renderJobsPage;
+module.exports = renderQueuePage;

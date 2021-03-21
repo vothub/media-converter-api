@@ -1,8 +1,10 @@
 const _ = require('lodash');
 const JobModel = require('../../../models/job');
 
-function apiDispatcherRetrieve (req, res) {
+function renderJobInspectPage (req, res) {
   const jobId = req.params.jobId;
+  res.locals.pageTitle = `Inspect job ${jobId} - Media Converter`;
+
   const autorefresh = req.query.autorefresh === 'true';
   if (!jobId) {
     return res.render('pages/error', { error: 'Please specify jobId.' });
@@ -24,4 +26,4 @@ function apiDispatcherRetrieve (req, res) {
   });
 }
 
-module.exports = apiDispatcherRetrieve;
+module.exports = renderJobInspectPage;
