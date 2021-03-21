@@ -39,8 +39,8 @@ function createJob(data, callback) {
   ) VALUES (
     '${data.input_url}',
     '${data.preset}',
-    ${data.origin ? `${data.origin}` : "'test-suite'"},
-    ${data.owner ? `${data.owner}` : "'vhmc'"}
+    ${data.origin ? `'${data.origin}'` : "'test-suite'"},
+    ${data.owner ? `'${data.owner}'` : "'vhmc'"}
   ) RETURNING job_id;`;
 
   return pg.execQuery(insertQuery, (insertJobResponse) => {
