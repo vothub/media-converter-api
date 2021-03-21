@@ -1,4 +1,4 @@
-'use strict';
+process.env.VHMC_PROCESS_TYPE = 'api';
 
 const express = require('express');
 const hbs = require('hbs');
@@ -41,6 +41,7 @@ function startApp () {
   app.post('/jobs/create-new/upload', require('../routes/pages/jobs/create-new/upload'));
   app.get('/jobs/view/:jobId', require('../routes/pages/jobs/view'));
   app.get('/api', require('../routes/pages/api'));
+  app.get('/about', require('../routes/pages/about'));
 
   // start app
   app.listen(config.appPort, () => {

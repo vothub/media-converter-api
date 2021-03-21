@@ -1,53 +1,56 @@
-<div class="container">
-  <div class="col-xs-8 col-sm-8 text-left">
-    <h2>Inspect job #{{jobId}}</h2>
-    <p>Time in queue: 17s | Execution time: 62s | Attempted runs: 1</p>
+{{#if autorefresh}}
+<meta http-equiv="refresh" content="5">
+{{/if}}
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-10 col-sm-offset-1 text-left">
+      <h2>Inspect job</h2>
+      <p>Time in queue: 17s | Place in queue: 3 | Execution time: 62s | Attempted runs: 1</p>
+
+      <br /><br />
+
+      {{#if autorefresh}}
+        <a href="?" class="btn btn-sm btn-default">Autorefresh off</a>
+      {{else}}
+        <a href="?autorefresh=true" class="btn btn-sm btn-default">Autorefresh on</a>
+      {{/if}}
+      {{#if data.progress}}
+        <!-- job in progress -->
+        <a href="#" class="btn btn-sm btn-danger">Cancel</a>
+        <!-- job failed 3 times -->
+        <a href="#" class="btn btn-sm btn-primary">Re-run</a>
+      {{else}}
+        <!-- job not started yet -->
+        <a href="#" class="btn btn-sm btn-primary">Move to the top of the queue</a>
+      {{/if}}
+    </div>
   </div>
 
-  <div class="col-xs-4 col-sm-4 text-right">
-    {{#if data.progress}}
-      <!-- job in progress -->
-      <a href="#" class="btn btn-sm btn-danger">Cancel</a>
-      <!-- job failed 3 times -->
-      <a href="#" class="btn btn-sm btn-primary">Re-run</a>
-    {{else}}
-      <!-- job not started yet -->
-      <a href="#" class="btn btn-sm btn-primary">Move to the top of the queue</a>
-    {{/if}}
+  <br /><br />
 
-  </div>
-</div>
+  <div class="row">
+    <div class="col-sm-10 col-sm-offset-1">
+      <table class="table">
+        <tr>
+          <td>Job ID:</td>
+          <td><code>{{job.data.job_id}}</code></td>
+        </tr>
+        <tr>
+          <td>Input:</td>
+          <td>{{job.data.input_url}}</td>
+        </tr>
+        <tr>
+          <td>Requested outputs:</td>
+          <td>{{job.data.requested_outputs}}</td>
+        </tr>
+        <tr>
+          <td>Job status:</td>
+          <td>{{job.data.status}}</td>
+        </tr>
+      </table>
 
-<br />
-
-<div class="container">
-  <div class="col-xs-12">
-    <table class="table">
-      <tr>
-        <td>Job ID:</td>
-        <td>{{job.data.job_id}}</td>
-      </tr>
-      <tr>
-        <td>Input:</td>
-        <td>{{job.data.input_url}}</td>
-      </tr>
-      <tr>
-        <td>Requested outputs:</td>
-        <td>{{job.data.requested_outputs}}</td>
-      </tr>
-      <tr>
-        <td>Job status:</td>
-        <td>{{job.data.status}}</td>
-      </tr>
-    </table>
-
-    {{#if job.data.url}}
-      <p><a href="{{job.data.url}}" class="btn btn-md btn-primary">Download</a></p>
-    {{else}}
-      <p>Progress: {{#if job.data.progress}}{{job.data.progress}}{{else}}0{{/if}}%</p>
-      <meta http-equiv="refresh" content="5">
-    {{/if}}
-
-    <pre>{{stringifyJson job}}</pre>
+      <pre>{{stringifyJson job}}</pre>
+    </div>
   </div>
 </div>

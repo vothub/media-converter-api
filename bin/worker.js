@@ -1,3 +1,5 @@
+process.env.VHMC_PROCESS_TYPE = 'worker';
+
 const ffbinariesWrapper = require('../lib/ffbinaries');
 const helpers = require('../lib/helpers');
 const converter = require('../lib/converter');
