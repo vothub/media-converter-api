@@ -5,23 +5,22 @@ function claimFirstAvailableJob(workerId, callback) {
 function identifyStuckJobs() {
   // find jobs stuck in processing for more than ~5 minutes (relative to filesize)
   // if timeout hit and the worker stopped sending updates set the job run status to failed
-  //
 }
 
-function insertNewJobsIntoQueue() {
+function addNewJobToQueue() {
   // find all jobs with "new" status
   // and create a queue record for them if they don't have one
 }
 
-function moveQueueItemToTheTop() {
+function moveJobToTopOfQueue() {
   // moves a specific queue item to the top of the queue
 }
 
 const QueueModel = {
+  addNewJobToQueue,
   claimFirstAvailableJob,
   identifyStuckJobs,
-  insertNewJobsIntoQueue,
-  moveQueueItemToTheTop,
+  moveJobToTopOfQueue,
 };
 
 module.exports = QueueModel;

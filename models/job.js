@@ -1,7 +1,7 @@
 const pg = require('../lib/postgres');
 const FFMPEG_PRESETS = require('./presets');
 
-const availablePresetsArray = FFMPEG_PRESETS.map((preset) => preset.value);
+const presetKeys = Object.keys(FFMPEG_PRESETS);
 
 // very meh - replace with something decent
 function sanitiseSQLString(input) {
@@ -25,7 +25,7 @@ function createJob(data, callback) {
     console.log('Missing arguments when creating a job. Provided:', data);
     return null;
   }
-  if (availablePresetsArray.indexOf(data.preset) === -1) {
+  if (presetKeys.indexOf(data.preset) === -1) {
     console.log('Unsupported output format. Provided:', data.preset);
     return null;
   }
