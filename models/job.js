@@ -1,7 +1,7 @@
 const pg = require('../lib/postgres');
-const AVAILABLE_PRESETS = require('./presets');
+const FFMPEG_PRESETS = require('./presets');
 
-const availablePresetsArray = AVAILABLE_PRESETS.map((preset) => preset.value);
+const availablePresetsArray = FFMPEG_PRESETS.map((preset) => preset.value);
 
 // very meh - replace with something decent
 function sanitiseSQLString(input) {
@@ -148,7 +148,6 @@ function getJobById(jobId, callback) {
 }
 
 const JobModel = {
-  AVAILABLE_PRESETS,
   createJob,
   updateJob,
   getAllJobs,
