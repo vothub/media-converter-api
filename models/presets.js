@@ -1,4 +1,4 @@
-/* eslint-disable quotes,object-property-newline */
+/* eslint-disable quotes,quote-props,object-property-newline */
 const FFMPEG_PRESETS = {
   'mp4-h264-720p': {
     ext: 'mp4',
